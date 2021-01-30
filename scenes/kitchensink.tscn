@@ -6,7 +6,9 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 350, 10 )
 
-[node name="kitchensink" type="Node2D"]
+[node name="kitchensink" type="Node2D" groups=[
+"levels",
+]]
 
 [node name="player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 8.47571, -63.5678 )
@@ -24,4 +26,19 @@ shape = SubResource( 1 )
 position = Vector2( 124.487, 29.1352 )
 
 [node name="Node2D2" parent="." instance=ExtResource( 2 )]
-position = Vector2( 216.131, 23.8379 )
+position = Vector2( 225.666, -290.823 )
+
+[node name="Node2D3" parent="." instance=ExtResource( 2 )]
+position = Vector2( -185.935, -165.806 )
+
+[node name="Node2D4" parent="." instance=ExtResource( 2 )]
+position = Vector2( -113.892, -228.844 )
+
+[node name="Node2D5" parent="." instance=ExtResource( 2 )]
+position = Vector2( 140.379, -201.828 )
+
+[node name="Node2D6" parent="." instance=ExtResource( 2 )]
+position = Vector2( 69.3953, -7.41625 )
+
+[node name="Node2D7" parent="." instance=ExtResource( 2 )]
+position = Vector2( 321.018, 21.719 )
