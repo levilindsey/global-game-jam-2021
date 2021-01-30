@@ -1,16 +1,44 @@
-extends RigidBody2D
+extends KinematicBody2D
 class_name Enemy
 
 export var size := 3
+export var speed := 100.0
+var velocity = Vector2.ZERO
+var direction = 1
+const GRAVITY = 10.0
 
 func _physics_process(_delta):
     _update_size()
+    
+    if $ObjectDetectorLeft.is_colliding():
+        direction = 1
+    elif $ObjectDetectorRight.is_colliding():
+        direction = -1
+    
+    if not $FloorDetectorLeft.is_colliding():
+        direction = 1
+    elif not $FloorDetectorRight.is_colliding():
+        direction = -1
+    
+    if not $FloorDetectorLeft.is_colliding() and not $FloorDetectorRight.is_colliding():
+        velocity.y += GRAVITY
+        velocity.x = 0
+    else:
+        velocity.x = speed * direction
+        velocity.y = 0
+
+    velocity = move_and_slide(velocity, Vector2.UP)
 
 func get_radius():
     return Constants.SIZE_SCALE * sqrt(size)
 
 func _update_size():
-    $CollisionShape2D.shape.radius = get_radius()
+    var radius = get_radius()
+    $CollisionShape2D.shape.radius = radius
+    $FloorDetectorLeft.position = Vector2(-radius, radius)
+    $FloorDetectorRight.position = Vector2(radius, radius)
+    $ObjectDetectorLeft.position = Vector2(-radius+1, 0)
+    $ObjectDetectorRight.position = Vector2(radius-1, 0)
 
 func destroy():
     queue_free()

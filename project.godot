@@ -14,7 +14,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scenes/bit.gd"
 }, {
-"base": "RigidBody2D",
+"base": "KinematicBody2D",
 "class": "Enemy",
 "language": "GDScript",
 "path": "res://scenes/enemy.gd"
@@ -113,7 +113,8 @@ jump={
 [layer_names]
 
 2d_physics/layer_1="level"
-2d_physics/layer_2="bit"
+2d_physics/layer_2="bits"
+2d_physics/layer_3="enemies"
 
 [rendering]
 

@@ -75,4 +75,9 @@ func _on_Area2D_body_entered(body):
     if body.is_in_group("bits"):
         size += body.size
         body.destroy()
-        print('Player size ', size)
+    if body.is_in_group("enemies"):
+        if size < body.size:
+            Nav.open(Nav.GAME_OVER_PAGE)
+        else:
+            size += body.size
+            body.destroy()
