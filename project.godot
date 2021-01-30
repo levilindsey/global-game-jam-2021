@@ -86,6 +86,7 @@ Constants="*res://scripts/constants.gd"
 Screen="*res://scripts/screen.gd"
 Music="*res://scripts/music.gd"
 Nav="*res://scripts/navigation.gd"
+Sfx="*res://scripts/sfx.gd"
 
 [input]
 
