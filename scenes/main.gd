@@ -11,4 +11,5 @@ func _ready() -> void:
     # TODO: Something's wrong with scaling. Fix it before adding this back.  
 #    Nav.open(Nav.SPLASH_PAGE)
 #    yield(get_tree().create_timer(SPLASH_SCREEN_DURATION_SEC), "timeout")
-    Nav.open(Nav.MAIN_MENU_PAGE)
+    #Nav.open(Nav.MAIN_MENU_PAGE)
+    Nav.open(Nav.LEVEL_PAGE)
