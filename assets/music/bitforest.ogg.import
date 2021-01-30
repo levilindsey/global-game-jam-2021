@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/bitforest.ogg-e6780b1810c477b67b438d527c16024c.oggstr"
+
+[deps]
+
+source_file="res://assets/music/bitforest.ogg"
+dest_files=[ "res://.import/bitforest.ogg-e6780b1810c477b67b438d527c16024c.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

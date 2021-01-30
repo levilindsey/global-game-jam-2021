@@ -30,6 +30,11 @@ config/name="Global Game Jam 2021"
 run/main_scene="res://scenes/kitchensink.tscn"
 config/icon="res://assets/images/icon-64.png"
 
+[autoload]
+
+Screen="*res://scripts/screen.gd"
+Music="*res://scripts/music.gd"
+
 [input]
 
 move_left={
