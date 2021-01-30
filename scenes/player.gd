@@ -11,7 +11,7 @@ const VERTICAL_ACCEL = 300.0
 const GRAVITY = 10.0
 
 const DEFAULT_BIT_SIZE = 1
-
+const DEFAULT_SPRITE_SCALE = Vector2(0.006, 0.006)
 
 func _ready():
     pass
@@ -58,6 +58,7 @@ func _get_radius():
 func _update_size():
     $CollisionShape2D.shape.radius = _get_radius()
     $Area2D/CollisionShape2D.shape.radius = _get_radius()
+    $Sprite.scale = DEFAULT_SPRITE_SCALE * _get_radius()
 
 func _on_Area2D_body_entered(body):
     if body.is_in_group("bits"):
