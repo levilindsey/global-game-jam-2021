@@ -33,8 +33,8 @@ class MusicBox extends Node:
         self.tween.connect("tween_completed", self, "on_fade_complete")
 
     func set_volume_db(volume_db):
-        player.volume_db = volume_db
-        alt_player.volume_db = volume_db
+        player.volume_db = lerp(MIN_DB, volume_db, Constants.VOLUME_SCALE)
+        alt_player.volume_db = lerp(MIN_DB, volume_db, Constants.VOLUME_SCALE)
 
     func fade_in():
         player.play(last_playback_pos)
@@ -55,8 +55,8 @@ class MusicBox extends Node:
         return tween.is_active()
 
     func play():
-        player.volume_db = MUSIC_DB
-        alt_player.volume_db = MUSIC_DB
+        player.volume_db = lerp(MIN_DB, MUSIC_DB, Constants.VOLUME_SCALE)
+        alt_player.volume_db = lerp(MIN_DB, MUSIC_DB, Constants.VOLUME_SCALE)
         player.play()
         alt_player.play()
 

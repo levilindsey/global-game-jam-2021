@@ -40,5 +40,5 @@ func play(sample):
 
     var player = pool[idx]
     player.stream = stream
-    player.volume_db = SFX_DB
+    player.volume_db = lerp(MIN_DB, SFX_DB, Constants.VOLUME_SCALE)
     player.play()
