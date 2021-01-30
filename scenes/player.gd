@@ -107,7 +107,7 @@ func _on_Area2D_body_entered(body):
         size += body.size
         body.destroy()
     if body.is_in_group("enemies"):
-        if size < body.size:
+        if body.spiky or size < body.size:
             Nav.get_level_page().reset()
         else:
             size += body.size

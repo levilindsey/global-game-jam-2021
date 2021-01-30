@@ -2,10 +2,19 @@ extends KinematicBody2D
 class_name Enemy
 
 export var size := 3
-export var speed := 100.0
+export var spiky = false
+
+var speed := 100.0
 var velocity = Vector2.ZERO
 var direction = 1
+
 const GRAVITY = 10.0
+
+func _ready():
+    if spiky:
+        $CollisionShape2D.shape = RectangleShape2D.new()
+    else:
+        $CollisionShape2D.shape = CircleShape2D.new()
 
 func _physics_process(_delta):
     _update_size()
@@ -34,11 +43,14 @@ func get_radius():
 
 func _update_size():
     var radius = get_radius()
-    $CollisionShape2D.shape.radius = radius
+    if spiky:
+        $CollisionShape2D.shape.extents = Vector2(radius, radius)
+    else:
+        $CollisionShape2D.shape.radius = radius
     $FloorDetectorLeft.position = Vector2(-radius, radius)
     $FloorDetectorRight.position = Vector2(radius, radius)
-    $ObjectDetectorLeft.position = Vector2(-radius+1, 0)
-    $ObjectDetectorRight.position = Vector2(radius-1, 0)
+    $ObjectDetectorLeft.position = Vector2(-radius-1, 0)
+    $ObjectDetectorRight.position = Vector2(radius+1, 0)
 
 func destroy():
     queue_free()

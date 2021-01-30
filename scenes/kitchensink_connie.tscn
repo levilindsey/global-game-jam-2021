@@ -68,6 +68,7 @@ position = Vector2( 357.952, -237.247 )
 
 [node name="Enemy3" parent="level_logic" instance=ExtResource( 6 )]
 position = Vector2( 156.381, -277.68 )
+spiky = true
 
 [node name="Enemy2" parent="level_logic" instance=ExtResource( 6 )]
 position = Vector2( -270.545, -291.951 )
