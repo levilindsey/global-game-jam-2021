@@ -45,4 +45,11 @@ func _physics_process(_delta):
             collision.collider.destroy()
 
 func _update_size():
-    $KinematicBody2D/CollisionShape2D.shape.radius = DEFAULT_RADIUS * sqrt(size)
+    var radius = DEFAULT_RADIUS * sqrt(size)
+    $KinematicBody2D/CollisionShape2D.shape.radius = radius
+    $KinematicBody2D/Area2D/CollisionShape2D.shape.radius = radius
+
+func _on_Area2D_body_entered(body):
+    if body.is_in_group("bits"):
+        size += body.size
+        body.destroy()
