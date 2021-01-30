@@ -14,7 +14,7 @@ const DEFAULT_BIT_SIZE = 1
 
 
 func _ready():
-	pass
+    pass
 
 func _physics_process(_delta):
     velocity.x = 0
@@ -41,25 +41,25 @@ func _jump():
 
 
 func _emit():
-	var bit_size = DEFAULT_BIT_SIZE
-	size -= bit_size
-	
-	var level = get_tree().get_nodes_in_group('levels')[0]
-	
-	var bit = Bit.instance()
-	level.add_child(bit)
-	bit.size = bit_size
-	bit.linear_velocity = -velocity * 0.5
-	bit.position = global_position - (_get_radius() + bit.get_radius() + 0.1) * velocity.normalized()
+    var bit_size = DEFAULT_BIT_SIZE
+    size -= bit_size
+    
+    var level = get_tree().get_nodes_in_group('levels')[0]
+    
+    var bit = Bit.instance()
+    level.add_child(bit)
+    bit.size = bit_size
+    bit.linear_velocity = -velocity * 0.5
+    bit.position = global_position - (_get_radius() + bit.get_radius() + 0.1) * velocity.normalized()
 
 func _get_radius():
-	return Constants.SIZE_SCALE * sqrt(size)
+    return Constants.SIZE_SCALE * sqrt(size)
 
 func _update_size():
-	$CollisionShape2D.shape.radius = _get_radius()
-	$Area2D/CollisionShape2D.shape.radius = _get_radius()
+    $CollisionShape2D.shape.radius = _get_radius()
+    $Area2D/CollisionShape2D.shape.radius = _get_radius()
 
 func _on_Area2D_body_entered(body):
-	if body.is_in_group("bits"):
-		size += body.size
-		body.destroy()
+    if body.is_in_group("bits"):
+        size += body.size
+        body.destroy()
