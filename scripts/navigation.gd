@@ -11,13 +11,12 @@ enum {
 const _MAIN_THEME := preload("res://assets/main_theme.tres")
 
 const _TRANSPARENT_PAGES := [
-    PAUSE_PAGE, 
+    PAUSE_PAGE,
     GAME_OVER_PAGE,
 ]
 
 # Dictionary<PageType, Page>
 onready var pages := {
-    SPLASH_PAGE: preload("res://scenes/pages/splash_page.tscn").instance(),
     MAIN_MENU_PAGE: preload("res://scenes/pages/main_menu_page.tscn").instance(),
     LEVEL_PAGE: preload("res://scenes/pages/level_page.tscn").instance(),
     PAUSE_PAGE: preload("res://scenes/pages/pause_page.tscn").instance(),
@@ -85,3 +84,6 @@ func open(page_type: int) -> void:
     if previous_page != null and !is_transparent_page:
         previous_page._on_deactivated()
         previous_page.visible = false
+
+func get_level_page() -> LevelPage:
+    return pages[LEVEL_PAGE]

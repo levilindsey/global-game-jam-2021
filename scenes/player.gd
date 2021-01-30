@@ -77,7 +77,7 @@ func _on_Area2D_body_entered(body):
         body.destroy()
     if body.is_in_group("enemies"):
         if size < body.size:
-            Nav.open(Nav.GAME_OVER_PAGE)
+            Nav.get_level_page().reset()
         else:
             size += body.size
             body.destroy()

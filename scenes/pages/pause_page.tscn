@@ -10,13 +10,26 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Unpause" type="Button" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 margin_left = 452.0
-margin_top = 280.0
+margin_top = 255.0
 margin_right = 572.0
-margin_bottom = 320.0
+margin_bottom = 345.0
+custom_constants/separation = 10
+
+[node name="Unpause" type="Button" parent="VBoxContainer"]
+margin_right = 120.0
+margin_bottom = 40.0
 rect_min_size = Vector2( 120, 40 )
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "Unpause"
-[connection signal="pressed" from="Unpause" to="." method="_on_Unpause_pressed"]
+
+[node name="Reset" type="Button" parent="VBoxContainer"]
+margin_top = 50.0
+margin_right = 120.0
+margin_bottom = 90.0
+rect_min_size = Vector2( 120, 40 )
+text = "Reset"
+[connection signal="pressed" from="VBoxContainer/Unpause" to="." method="_on_Unpause_pressed"]
+[connection signal="pressed" from="VBoxContainer/Reset" to="." method="_on_Reset_pressed"]
