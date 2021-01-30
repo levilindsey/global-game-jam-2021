@@ -13,11 +13,18 @@ const GRAVITY = 10.0
 const DEFAULT_BIT_SIZE = 1
 const DEFAULT_SPRITE_SCALE = Vector2(0.006, 0.006)
 
+var facing_right = true
+
 func _ready():
     pass
 
 func _physics_process(_delta):
     velocity.x = 0
+
+    if Input.is_action_just_pressed("move_left"):
+        facing_right = false
+    if Input.is_action_just_pressed("move_right"):
+        facing_right = true
 
     if Input.is_action_pressed("move_left"):
         velocity.x -= HORIZONTAL_ACCEL
@@ -33,6 +40,7 @@ func _physics_process(_delta):
     velocity = move_and_slide(velocity, Vector2.UP)
     
     _update_size()
+    _update_sprite_flip()
 
 func _jump():
     velocity.y = -VERTICAL_ACCEL
@@ -59,6 +67,9 @@ func _update_size():
     $CollisionShape2D.shape.radius = _get_radius()
     $Area2D/CollisionShape2D.shape.radius = _get_radius()
     $Sprite.scale = DEFAULT_SPRITE_SCALE * _get_radius()
+
+func _update_sprite_flip():
+    $Sprite.flip_h = not facing_right
 
 func _on_Area2D_body_entered(body):
     if body.is_in_group("bits"):
