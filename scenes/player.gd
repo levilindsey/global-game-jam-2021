@@ -8,9 +8,10 @@ var velocity = Vector2.ZERO
 
 const HORIZONTAL_VEL = 300.0
 const HORIZONTAL_ACCEL = 10 # How quickly we accelerate to max speed
-const VERTICAL_ACCEL = 500.0
+const JUMP_ACCEL = 500.0
+const DASH_ACCEL = 500.0
 const GRAVITY = 30.0
-const TERM_VEL = VERTICAL_ACCEL * 2
+const TERM_VEL = JUMP_ACCEL * 2
 
 const DEFAULT_BIT_SIZE = 1
 const DEFAULT_SPRITE_SCALE = Vector2(0.006, 0.006)
@@ -32,11 +33,17 @@ func _physics_process(_delta):
 
     if Input.is_action_just_pressed("jump") and size > 1:
         _jump()
+    if Input.is_action_just_pressed("dash") and size > 1:
+        _dash()
     
     # Apply gravity
     velocity.y = min(TERM_VEL, velocity.y + GRAVITY)
     
     # Lerp horizontal movement
+    var horizontal_accel = HORIZONTAL_ACCEL
+    if abs(velocity.x) > abs(target_horizontal):
+        horizontal_accel = HORIZONTAL_ACCEL * 0.1
+
     velocity.x = lerp(velocity.x, target_horizontal, HORIZONTAL_ACCEL * _delta)
     
     velocity = move_and_slide(velocity, Vector2.UP)
@@ -45,8 +52,18 @@ func _physics_process(_delta):
     _update_sprite_flip()
 
 func _jump():
-    velocity.y = -VERTICAL_ACCEL
+    velocity.y = -JUMP_ACCEL
     _emit()
+    Sfx.play(Sfx.JUMP)
+
+func _dash():
+    velocity.y = 0
+    if facing_right:
+        velocity.x = DASH_ACCEL
+    else:
+        velocity.x = -DASH_ACCEL
+    _emit()
+    # TODO: Replace with dash sfx
     Sfx.play(Sfx.JUMP)
 
 func _emit():
@@ -58,7 +75,7 @@ func _emit():
     level.add_child(bit)
     bit.size = bit_size
     bit.linear_velocity = -velocity * 0.5
-    bit.position = global_position - (_get_radius() + bit.get_radius() + 0.1) * velocity.normalized()
+    bit.position = position - (_get_radius() + bit.get_radius() + 0.1) * velocity.normalized()
 
 func _get_radius():
     return Constants.SIZE_SCALE * sqrt(size)
