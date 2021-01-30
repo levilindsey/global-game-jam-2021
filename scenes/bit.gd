@@ -20,11 +20,11 @@ func _update_size():
     $CollisionShape2D.shape.radius = get_radius()
 
 func destroy():
-    queue_free()
     i_was_eaten = true
-
+    queue_free()
+    
 func _on_Bit_body_entered(body: Node) -> void:
-    if body.is_in_group("bits") and !i_was_eaten:
+    if body.is_in_group("bits") and !i_was_eaten and !body.i_was_eaten:
         if position.y > body.position.y:
             size += body.size
             body.destroy()

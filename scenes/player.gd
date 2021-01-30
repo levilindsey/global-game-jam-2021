@@ -51,7 +51,7 @@ func _jump():
 func _emit():
     var bit_size = DEFAULT_BIT_SIZE
     size -= bit_size
-    
+    print('Player size ', size)
     var level = get_tree().get_nodes_in_group('levels')[0]
     
     var bit = Bit.instance()
@@ -75,3 +75,4 @@ func _on_Area2D_body_entered(body):
     if body.is_in_group("bits"):
         size += body.size
         body.destroy()
+        print('Player size ', size)
