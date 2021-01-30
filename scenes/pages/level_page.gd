@@ -6,7 +6,8 @@ enum {
 }
 
 const _LEVEL_PACKED_SCENES := {
-    LEVEL_1: preload("res://scenes/kitchensink.tscn"),
+    # Change to your own kitchensink scene!
+    LEVEL_1: preload("res://scenes/kitchensink_zaven.tscn"),
 }
 
 var level_type := LEVEL_1
