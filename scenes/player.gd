@@ -8,20 +8,26 @@ var velocity = Vector2.ZERO
 
 const HORIZONTAL_VEL = 300.0
 const HORIZONTAL_ACCEL = 10 # How quickly we accelerate to max speed
-const JUMP_ACCEL = 500.0
-const DASH_ACCEL = 500.0
+const JUMP_ACCEL = 600.0
+const DASH_ACCEL = 800.0
 const GRAVITY = 30.0
 const TERM_VEL = JUMP_ACCEL * 2
 
 const DEFAULT_BIT_SIZE = 1
 const DEFAULT_SPRITE_SCALE = Vector2(0.006, 0.006)
 
+const DASH_TIME = 0.15
+const DASH_GRAVITY = 0.5  # Percentage of normal gravity
+
+var is_dashing = false
+var dash_duration_remaining = 0.0
+
 var facing_right = true
 
 func _ready():
     pass
 
-func _physics_process(_delta):
+func _physics_process(delta):
     var target_horizontal = 0
     if Input.is_action_pressed("move_left"):
         target_horizontal -= HORIZONTAL_VEL
@@ -36,15 +42,21 @@ func _physics_process(_delta):
     if Input.is_action_just_pressed("dash") and size > 1:
         _dash()
     
-    # Apply gravity
-    velocity.y = min(TERM_VEL, velocity.y + GRAVITY)
+    # Apply gravity, but less so when dashing
+    velocity.y = min(TERM_VEL, velocity.y + GRAVITY) * (DASH_GRAVITY * int(is_dashing) + (1 - int(is_dashing)))
     
     # Lerp horizontal movement
     var horizontal_accel = HORIZONTAL_ACCEL
     if abs(velocity.x) > abs(target_horizontal):
         horizontal_accel = HORIZONTAL_ACCEL * 0.1
 
-    velocity.x = lerp(velocity.x, target_horizontal, HORIZONTAL_ACCEL * _delta)
+    # Special case for dashing
+    if is_dashing:
+        dash_duration_remaining -= delta
+        if dash_duration_remaining <= 0:
+            is_dashing = false
+    else:
+        velocity.x = lerp(velocity.x, target_horizontal, HORIZONTAL_ACCEL * delta)
     
     velocity = move_and_slide(velocity, Vector2.UP)
     
@@ -57,6 +69,8 @@ func _jump():
     Sfx.play(Sfx.JUMP)
 
 func _dash():
+    is_dashing = true
+    dash_duration_remaining = DASH_TIME
     velocity.y = 0
     if facing_right:
         velocity.x = DASH_ACCEL
