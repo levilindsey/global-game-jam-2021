@@ -12,33 +12,32 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-margin_left = 92.0
-margin_top = 220.0
-margin_right = 932.0
-margin_bottom = 380.0
+margin_top = 137.0
+margin_right = 1340.0
+margin_bottom = 463.0
 custom_constants/separation = 0
 
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer"]
-margin_right = 840.0
-margin_bottom = 80.0
+margin_right = 1340.0
+margin_bottom = 246.0
 mouse_filter = 2
 texture = ExtResource( 2 )
 
 [node name="Spacer" type="Control" parent="VBoxContainer"]
-margin_left = 420.0
-margin_top = 80.0
-margin_right = 420.0
-margin_bottom = 120.0
+margin_left = 670.0
+margin_top = 246.0
+margin_right = 670.0
+margin_bottom = 286.0
 rect_min_size = Vector2( 0, 40 )
 mouse_filter = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="BringItOn" type="Button" parent="VBoxContainer"]
-margin_left = 340.0
-margin_top = 120.0
-margin_right = 500.0
-margin_bottom = 160.0
+margin_left = 590.0
+margin_top = 286.0
+margin_right = 750.0
+margin_bottom = 326.0
 rect_min_size = Vector2( 160, 40 )
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 4

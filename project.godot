@@ -74,7 +74,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Global Game Jam 2021"
+config/name="OoboloO"
 run/main_scene="res://scenes/main.tscn"
 boot_splash/image="res://assets/images/made-by-us.png"
 boot_splash/bg_color=Color( 0.137255, 0.172549, 0.239216, 1 )

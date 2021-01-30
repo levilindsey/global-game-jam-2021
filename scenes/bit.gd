@@ -1,5 +1,8 @@
+tool
 extends RigidBody2D
 class_name Bit
+
+const SPRITE_SCALE_MULTIPLIER := 0.0150125
 
 export var size := 1
 
@@ -18,6 +21,7 @@ func get_radius():
 
 func _update_size():
     $CollisionShape2D.shape.radius = get_radius()
+    $Sprite.scale = get_radius() * Vector2(SPRITE_SCALE_MULTIPLIER, SPRITE_SCALE_MULTIPLIER)
 
 func destroy():
     i_was_eaten = true
