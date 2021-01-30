@@ -35,7 +35,7 @@ func _ready() -> void:
         page.visible = false
         var parent: Node = self if page is LevelPage else _page_wrapper
         parent.add_child(page)
-
+    
     _on_size_changed()
     get_viewport().connect( \
             "size_changed", \

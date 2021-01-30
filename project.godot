@@ -14,11 +14,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scenes/bit.gd"
 }, {
-"base": "RigidBody2D",
-"class": "Enemy",
-"language": "GDScript",
-"path": "res://scenes/enemy.gd"
-}, {
 "base": "Page",
 "class": "GameOverPage",
 "language": "GDScript",
@@ -61,7 +56,6 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Bit": "",
-"Enemy": "",
 "GameOverPage": "",
 "LevelPage": "",
 "Main": "",
@@ -82,11 +76,9 @@ config/icon="res://assets/images/icon-64.png"
 
 [autoload]
 
-Constants="*res://scripts/constants.gd"
 Screen="*res://scripts/screen.gd"
 Music="*res://scripts/music.gd"
 Nav="*res://scripts/navigation.gd"
-Sfx="*res://scripts/sfx.gd"
 
 [input]
 

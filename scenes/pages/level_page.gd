@@ -5,7 +5,7 @@ enum {
     LEVEL_1,
 }
 
-var _LEVEL_PACKED_SCENES := {
+const _LEVEL_PACKED_SCENES := {
     # Change to your own kitchensink scene!
     LEVEL_1: preload("res://scenes/kitchensink_zaven.tscn"),
 }
