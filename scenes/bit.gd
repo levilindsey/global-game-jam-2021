@@ -3,8 +3,6 @@ class_name Bit
 
 export var size := 1
 
-const DEFAULT_RADIUS := 10.0
-
 var i_was_eaten := false
 
 func _ready() -> void:
@@ -16,12 +14,11 @@ func _physics_process(_delta):
     _update_size()
 
 func get_radius():
-    return DEFAULT_RADIUS * sqrt(size)
+    return Constants.SIZE_SCALE * sqrt(size)
 
 func _update_size():
     $CollisionShape2D.shape.radius = get_radius()
 
-func destroy():
     queue_free()
     i_was_eaten = true
 
