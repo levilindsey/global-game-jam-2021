@@ -5,7 +5,7 @@ export var size := 1
 
 const DEFAULT_RADIUS := 5.0
 
-func _physics_process(delta):
+func _physics_process(_delta):
     _update_size()
 
 func get_radius():
