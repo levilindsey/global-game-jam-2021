@@ -6,9 +6,11 @@ const Bit := preload("res://scenes/bit.tscn")
 export (int) var size = 2
 var velocity = Vector2.ZERO
 
-const HORIZONTAL_ACCEL = 300.0
+const HORIZONTAL_VEL = 300.0
+const HORIZONTAL_ACCEL = 10 # How quickly we accelerate to max speed
 const VERTICAL_ACCEL = 500.0
 const GRAVITY = 30.0
+const TERM_VEL = VERTICAL_ACCEL * 2
 
 const DEFAULT_BIT_SIZE = 1
 const DEFAULT_SPRITE_SCALE = Vector2(0.006, 0.006)
@@ -19,23 +21,23 @@ func _ready():
     pass
 
 func _physics_process(_delta):
-    velocity.x = 0
-
-    if Input.is_action_just_pressed("move_left"):
-        facing_right = false
-    if Input.is_action_just_pressed("move_right"):
-        facing_right = true
-
+    var target_horizontal = 0
     if Input.is_action_pressed("move_left"):
-        velocity.x -= HORIZONTAL_ACCEL
+        target_horizontal -= HORIZONTAL_VEL
     if Input.is_action_pressed("move_right"):
-        velocity.x += HORIZONTAL_ACCEL
+        target_horizontal += HORIZONTAL_VEL
     
+    if target_horizontal != 0:
+        facing_right = target_horizontal > 0
+
     if Input.is_action_just_pressed("jump") and size > 1:
         _jump()
     
     # Apply gravity
-    velocity.y += GRAVITY
+    velocity.y = min(TERM_VEL, velocity.y + GRAVITY)
+    
+    # Lerp horizontal movement
+    velocity.x = lerp(velocity.x, target_horizontal, HORIZONTAL_ACCEL * _delta)
     
     velocity = move_and_slide(velocity, Vector2.UP)
     
@@ -46,7 +48,6 @@ func _jump():
     velocity.y = -VERTICAL_ACCEL
     _emit()
     Sfx.play(Sfx.JUMP)
-
 
 func _emit():
     var bit_size = DEFAULT_BIT_SIZE
