@@ -14,26 +14,71 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scenes/bit.gd"
 }, {
+"base": "Page",
+"class": "GameOverPage",
+"language": "GDScript",
+"path": "res://scenes/pages/game_over_page.gd"
+}, {
+"base": "Page",
+"class": "LevelPage",
+"language": "GDScript",
+"path": "res://scenes/pages/level_page.gd"
+}, {
+"base": "Node2D",
+"class": "Main",
+"language": "GDScript",
+"path": "res://scenes/main.gd"
+}, {
+"base": "Page",
+"class": "MainMenuPage",
+"language": "GDScript",
+"path": "res://scenes/pages/main_menu_page.gd"
+}, {
+"base": "Container",
+"class": "Page",
+"language": "GDScript",
+"path": "res://scenes/pages/page.gd"
+}, {
+"base": "Page",
+"class": "PausePage",
+"language": "GDScript",
+"path": "res://scenes/pages/pause_page.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "Player",
 "language": "GDScript",
 "path": "res://scenes/player.gd"
+}, {
+"base": "Page",
+"class": "SplashPage",
+"language": "GDScript",
+"path": "res://scenes/pages/splash_page.gd"
 } ]
 _global_script_class_icons={
 "Bit": "",
-"Player": ""
+"GameOverPage": "",
+"LevelPage": "",
+"Main": "",
+"MainMenuPage": "",
+"Page": "",
+"PausePage": "",
+"Player": "",
+"SplashPage": ""
 }
 
 [application]
 
 config/name="Global Game Jam 2021"
-run/main_scene="res://scenes/kitchensink.tscn"
+run/main_scene="res://scenes/main.tscn"
+boot_splash/image="res://assets/images/made-by-us.png"
+boot_splash/bg_color=Color( 0.137255, 0.172549, 0.239216, 1 )
 config/icon="res://assets/images/icon-64.png"
 
 [autoload]
 
 Screen="*res://scripts/screen.gd"
 Music="*res://scripts/music.gd"
+Nav="*res://scripts/navigation.gd"
 
 [input]
 
