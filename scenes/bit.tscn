@@ -4,7 +4,6 @@
 [ext_resource path="res://assets/images/scratch/bit.png" type="Texture" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 80.0
 
 [node name="Bit" type="RigidBody2D" groups=[
 "bits",
@@ -20,6 +19,6 @@ shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( -1.27656, -5.38835 )
-scale = Vector2( 1.20108, 1.20108 )
+scale = Vector2( 0.150125, 0.150125 )
 texture = ExtResource( 2 )
 [connection signal="body_entered" from="." to="." method="_on_Bit_body_entered"]

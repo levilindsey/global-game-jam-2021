@@ -26,7 +26,7 @@ var dash_duration_remaining = 0.0
 var facing_right = true
 
 func _ready():
-    pass
+    _update_size()
 
 func _physics_process(delta):
     var target_horizontal = 0

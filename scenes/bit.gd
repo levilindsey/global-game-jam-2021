@@ -10,8 +10,8 @@ var i_was_eaten := false
 
 func _ready() -> void:
     var circle := CircleShape2D.new()
-    circle.radius = get_radius()
     $CollisionShape2D.shape = circle
+    _update_size()
 
 func _physics_process(_delta):
     _update_size()

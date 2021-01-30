@@ -83,6 +83,7 @@ config/icon="res://assets/images/icon-64.png"
 [autoload]
 
 Constants="*res://scripts/constants.gd"
+Utils="*res://scripts/utils.gd"
 Screen="*res://scripts/screen.gd"
 Music="*res://scripts/music.gd"
 Nav="*res://scripts/navigation.gd"
