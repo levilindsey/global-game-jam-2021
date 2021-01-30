@@ -1,7 +1,7 @@
 extends RigidBody2D
-class_name Bit
+class_name Enemy
 
-export var size := 1
+export var size := 3
 
 func _physics_process(_delta):
 	_update_size()
