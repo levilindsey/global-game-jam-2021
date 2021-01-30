@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenes/bit.gd" type="Script" id=1]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 5.0
+
+[node name="Node2D" type="RigidBody2D" groups=[
+"bits",
+]]
+collision_layer = 2
+script = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=[
+"bits",
+]]
+shape = SubResource( 1 )
