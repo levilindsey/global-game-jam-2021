@@ -6,9 +6,9 @@ const Bit := preload("res://scenes/bit.tscn")
 export (int) var size = 2
 var velocity = Vector2.ZERO
 
-const HORIZONTAL_ACCEL = 200.0
-const VERTICAL_ACCEL = 300.0
-const GRAVITY = 10.0
+const HORIZONTAL_ACCEL = 300.0
+const VERTICAL_ACCEL = 500.0
+const GRAVITY = 30.0
 
 const DEFAULT_BIT_SIZE = 1
 const DEFAULT_SPRITE_SCALE = Vector2(0.006, 0.006)
@@ -51,7 +51,6 @@ func _jump():
 func _emit():
     var bit_size = DEFAULT_BIT_SIZE
     size -= bit_size
-    print('Player size ', size)
     var level = get_tree().get_nodes_in_group('levels')[0]
     
     var bit = Bit.instance()
