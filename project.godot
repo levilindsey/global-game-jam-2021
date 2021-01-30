@@ -79,6 +79,7 @@ config/icon="res://assets/images/icon-64.png"
 Screen="*res://scripts/screen.gd"
 Music="*res://scripts/music.gd"
 Nav="*res://scripts/navigation.gd"
+Sfx="*res://scripts/sfx.gd"
 
 [input]
 

@@ -26,8 +26,7 @@ func _physics_process(_delta):
         velocity.x += HORIZONTAL_ACCEL
     
     if Input.is_action_just_pressed("jump") and size > 1:
-        velocity.y = -VERTICAL_ACCEL
-        _emit()
+        _jump()
     
     # Apply gravity
     velocity.y += GRAVITY
@@ -35,6 +34,12 @@ func _physics_process(_delta):
     velocity = move_and_slide(velocity, Vector2.UP)
     
     _update_size()
+
+func _jump():
+    velocity.y = -VERTICAL_ACCEL
+    _emit()
+    Sfx.play(Sfx.JUMP)
+
 
 func _emit():
     var bit_size = DEFAULT_BIT_SIZE
