@@ -385,13 +385,9 @@ func _check_tile() -> void:
             var tile_id := tilemap.get_cellv(tile_pos)
             var tile_name := tilemap.tile_set.tile_get_name(tile_id)
             if tile_name == Constants.SPIKES_TILE_NAME:
-                # You win!
-                print("You win!")
-                Nav.get_level_page().reset()
+                Nav.get_level_page().lose()
             elif tile_name == Constants.GOAL_TILE_NAME:
-                # You lose!
-                print("You lose!")
-                Nav.get_level_page().reset()
+                Nav.get_level_page().win()
 
 func _set_size(value: int) -> void:
     size = value
