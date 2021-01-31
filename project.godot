@@ -54,6 +54,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scenes/player.gd"
 }, {
+"base": "Node2D",
+"class": "PlayerParticles",
+"language": "GDScript",
+"path": "res://scenes/player_particles.gd"
+}, {
 "base": "Page",
 "class": "SplashPage",
 "language": "GDScript",
@@ -69,6 +74,7 @@ _global_script_class_icons={
 "Page": "",
 "PausePage": "",
 "Player": "",
+"PlayerParticles": "",
 "SplashPage": ""
 }
 

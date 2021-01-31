@@ -45,7 +45,7 @@ func _on_Area2D_body_entered(body: Node) -> void:
             _set_size(size + body.size)
             body.destroy()
         else:
-            _set_size(size + body.size)
+            body._set_size(size + body.size)
             destroy()
 
 func _set_size(value: int) -> void:
