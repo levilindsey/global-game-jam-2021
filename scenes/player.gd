@@ -3,7 +3,7 @@ class_name Player
 
 const Bit := preload("res://scenes/bit.tscn")
 
-export (int) var size = 2
+export (int) var size = 2 setget _set_size,_get_size
 var velocity = Vector2.ZERO
 
 const HORIZONTAL_VEL = 300.0
@@ -36,7 +36,10 @@ onready var impact_tween = Tween.new()
 const IMPACT_SCALE_MULTIPLIER := Vector2(1.5, 0.5)
 const IMPACT_DURATION_SEC := 0.25
 
+var _is_ready := false
+
 func _ready():
+    _is_ready = true
     _update_size()
     add_child(jump_tween)
     add_child(impact_tween)
@@ -87,7 +90,6 @@ func _physics_process(delta):
     
     velocity = move_and_slide(velocity, Vector2.UP)
     
-    _update_size()
     _update_sprite_flip()
     _check_tile()
 
@@ -196,7 +198,7 @@ func _dash():
 
 func _emit():
     var bit_size = DEFAULT_BIT_SIZE
-    size -= bit_size
+    _set_size(size - bit_size)
     var level = get_tree().get_nodes_in_group('levels')[0]
     
     var bit = Bit.instance()
@@ -218,13 +220,13 @@ func _update_sprite_flip():
 
 func _on_Area2D_body_entered(body):
     if body.is_in_group("bits"):
-        size += body.size
+        _set_size(size + body.size)
         body.destroy()
     if body.is_in_group("enemies"):
         if body.spiky or size < body.size:
             Nav.get_level_page().reset()
         else:
-            size += body.size
+            _set_size(size + body.size)
             body.destroy()
 
 func _check_tile() -> void:
@@ -244,3 +246,11 @@ func _check_tile() -> void:
                 # You lose!
                 print("You lose!")
                 Nav.get_level_page().reset()
+
+func _set_size(value: int) -> void:
+    size = value
+    if _is_ready:
+        _update_size()
+
+func _get_size() -> int:
+    return size

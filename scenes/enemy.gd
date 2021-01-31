@@ -1,7 +1,7 @@
 extends KinematicBody2D
 class_name Enemy
 
-export var size := 3
+export var size := 3 setget _set_size,_get_size
 export var spiky = false
 
 var speed := 100.0
@@ -10,14 +10,16 @@ var direction = 1
 
 const GRAVITY = 10.0
 
+var _is_ready := false
+
 func _ready():
+    _is_ready = true
     if spiky:
         $CollisionShape2D.shape = RectangleShape2D.new()
     else:
         $CollisionShape2D.shape = CircleShape2D.new()
 
 func _physics_process(_delta):
-    _update_size()
     _update_direction()
     
     if not $FloorDetectorLeft.is_colliding() and not $FloorDetectorRight.is_colliding():
@@ -54,3 +56,11 @@ func _update_direction():
 
 func destroy():
     queue_free()
+
+func _set_size(value: int) -> void:
+    size = value
+    if _is_ready:
+        _update_size()
+
+func _get_size() -> int:
+    return size
