@@ -25,9 +25,21 @@ var dash_duration_remaining = 0.0
 var jump_duration_remaining = 0.0
 
 var facing_right = true
+var was_on_floor = false
+var was_on_wall = false
+
+onready var jump_tween = Tween.new()
+const JUMP_SCALE_MULTIPLIER := Vector2(0.25, 2)
+const JUMP_DURATION_SEC := 0.5
+
+onready var impact_tween = Tween.new()
+const IMPACT_SCALE_MULTIPLIER := Vector2(1.5, 0.5)
+const IMPACT_DURATION_SEC := 0.25
 
 func _ready():
     _update_size()
+    add_child(jump_tween)
+    add_child(impact_tween)
 
 func _physics_process(delta):
     var target_horizontal = 0
@@ -43,6 +55,14 @@ func _physics_process(delta):
         _jump()
     if Input.is_action_just_pressed("dash") and size > 1:
         _dash()
+    
+    if not was_on_floor and is_on_floor():
+        _impact(false)
+    if not was_on_wall and is_on_wall():
+        _impact(true)
+    
+    was_on_floor = is_on_floor()
+    was_on_wall = is_on_wall()
     
     # Apply gravity, but less so when dashing
     velocity.y = min(TERM_VEL, velocity.y + GRAVITY) * (DASH_GRAVITY * int(is_dashing) + (1 - int(is_dashing)))
@@ -76,6 +96,91 @@ func _jump():
     velocity.y = -JUMP_ACCEL
     _emit()
     Sfx.play(Sfx.JUMP)
+
+    var displacement = Vector2(0.0, _get_radius() * (JUMP_SCALE_MULTIPLIER.y - 1.0))
+
+    var duration_a := JUMP_DURATION_SEC * 0.25
+    var duration_b := JUMP_DURATION_SEC - duration_a
+    jump_tween.interpolate_property(
+            $Sprite,
+            "scale_multiplier",
+            Vector2.ONE,
+            JUMP_SCALE_MULTIPLIER,
+            duration_a,
+            Tween.TRANS_BACK,
+            Tween.EASE_IN_OUT)
+    jump_tween.interpolate_property(
+            $Sprite,
+            "position",
+            Vector2.ZERO,
+            displacement,
+            duration_a,
+            Tween.TRANS_BACK,
+            Tween.EASE_IN_OUT)
+    jump_tween.interpolate_property(
+            $Sprite,
+            "scale_multiplier",
+            JUMP_SCALE_MULTIPLIER,
+            Vector2.ONE,
+            duration_b,
+            Tween.TRANS_BACK,
+            Tween.EASE_IN_OUT,
+            duration_a)
+    jump_tween.interpolate_property(
+            $Sprite,
+            "position",
+            displacement,
+            Vector2.ZERO,
+            duration_b,
+            Tween.TRANS_BACK,
+            Tween.EASE_IN_OUT,
+            duration_a)
+    jump_tween.start()
+
+func _impact(is_wall):
+    var scale_multiplier = IMPACT_SCALE_MULTIPLIER
+    var displacement = Vector2(0.0, _get_radius() * (scale_multiplier.y - 1.0))
+    if is_wall:
+        scale_multiplier = Vector2(IMPACT_SCALE_MULTIPLIER.y, IMPACT_SCALE_MULTIPLIER.x)
+        displacement = Vector2(_get_radius() * (scale_multiplier.x - 1.0), 0.0)
+
+    var duration_a := IMPACT_DURATION_SEC * 0.25
+    var duration_b := IMPACT_DURATION_SEC - duration_a
+    impact_tween.interpolate_property(
+            $Sprite,
+            "scale_multiplier",
+            Vector2.ONE,
+            JUMP_SCALE_MULTIPLIER,
+            duration_a,
+            Tween.TRANS_QUAD,
+            Tween.EASE_OUT)
+    impact_tween.interpolate_property(
+            $Sprite,
+            "position",
+            Vector2.ZERO,
+            displacement,
+            duration_a,
+            Tween.TRANS_QUAD,
+            Tween.EASE_OUT)
+    impact_tween.interpolate_property(
+            $Sprite,
+            "scale_multiplier",
+            JUMP_SCALE_MULTIPLIER,
+            Vector2.ONE,
+            duration_b,
+            Tween.TRANS_BACK,
+            Tween.EASE_OUT,
+            duration_a)
+    impact_tween.interpolate_property(
+            $Sprite,
+            "position",
+            displacement,
+            Vector2.ZERO,
+            duration_b,
+            Tween.TRANS_BACK,
+            Tween.EASE_OUT,
+            duration_a)
+    impact_tween.start()
 
 func _dash():
     is_dashing = true
