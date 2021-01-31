@@ -10,7 +10,6 @@
 [node name="Level1" type="Node2D"]
 
 [node name="level_logic" parent="." instance=ExtResource( 3 )]
-next_level = ""
 
 [node name="player" parent="level_logic" instance=ExtResource( 1 )]
 position = Vector2( -852.368, -396.092 )
