@@ -26,8 +26,8 @@ var _LEVEL_PACKED_SCENES := {
 const LEVEL_PROGRESSION := [
     LEVEL_1,
     LEVEL_2,
-    LEVEL_3,
     LEVEL_4,
+    LEVEL_3,
     LEVEL_5,
 ]
 # A slight delay to make level switching feel more deliberate.
@@ -36,7 +36,7 @@ const LOSE_ANIM_DELAY = 0.7
 
 
 ### --- CHANGE THIS TO TEST YOUR LEVEL. --- ###
-var level_index := 3
+var level_index := 2
 
 
 var level: Node2D
