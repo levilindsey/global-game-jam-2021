@@ -45,8 +45,10 @@ func win() -> void:
     print("You win!")
     if LEVEL_PROGRESSION.size() == level_index + 1:
         print("You beat our game!!")
-    level_index = min(LEVEL_PROGRESSION.size() - 1, level_index + 1)
-    reset()
+        Nav.open(Nav.GAME_OVER_PAGE)
+    else:
+        level_index = min(LEVEL_PROGRESSION.size() - 1, level_index + 1)
+        reset()
 
 func lose() -> void:
     print("You lose!")

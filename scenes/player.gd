@@ -412,6 +412,10 @@ func _on_Area2D_body_entered(body):
             _grow(body.size)
             particles.play(PlayerParticles.ENEMY_EXPLODE_EFFECT, body)
             body.destroy()
+    if body.is_in_group("goal") and not _is_winning:
+        Sfx.play(Sfx.GOAL)
+        _is_winning = true
+        Nav.get_level_page().win()
 
 func _check_tile() -> void:
     for i in get_slide_count():
@@ -424,10 +428,6 @@ func _check_tile() -> void:
             var tile_name := tilemap.tile_set.tile_get_name(tile_id)
             if tile_name == Constants.SPIKES_TILE_NAME:
                 Nav.get_level_page().lose()
-            elif tile_name == Constants.GOAL_TILE_NAME and not _is_winning:
-                Sfx.play(Sfx.GOAL)
-                _is_winning = true
-                Nav.get_level_page().win()
 
 func _set_size(value: int) -> void:
     size = value
