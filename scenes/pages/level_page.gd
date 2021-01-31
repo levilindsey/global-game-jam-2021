@@ -36,7 +36,7 @@ const LOSE_ANIM_DELAY = 0.7
 
 
 ### --- CHANGE THIS TO TEST YOUR LEVEL. --- ###
-var level_index := 2
+var level_index := 0
 
 
 var level: Node2D
@@ -60,7 +60,6 @@ func _fade_out_level():
     level.queue_free()
 
 func reset() -> void:
-    print(level_index)
     if level != null:
         Utils.get_child_by_type(level, Player, true).destroy()
         yield(get_tree().create_timer(LOSE_ANIM_DELAY), "timeout")
