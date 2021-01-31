@@ -28,9 +28,9 @@ var facing_right = true
 var was_on_floor = false
 var was_on_wall = false
 
-onready var jump_tween = Tween.new()
-const JUMP_SCALE_MULTIPLIER := Vector2(0.85, 1.15)
-const JUMP_DURATION_SEC := 0.5
+onready var launch_tween = Tween.new()
+const LAUNCH_SCALE_MULTIPLIER := Vector2(0.85, 1.15)
+const LAUNCH_DURATION_SEC := 0.25
 
 onready var impact_tween = Tween.new()
 const IMPACT_SCALE_MULTIPLIER := Vector2(1.25, 0.75)
@@ -41,7 +41,7 @@ var _is_ready := false
 func _ready():
     _is_ready = true
     _update_size()
-    add_child(jump_tween)
+    add_child(launch_tween)
     add_child(impact_tween)
 
 func _physics_process(delta):
@@ -98,20 +98,50 @@ func _jump():
     velocity.y = -JUMP_ACCEL
     _emit()
     Sfx.play(Sfx.JUMP)
+    _launch(false)
 
-    var displacement = Vector2(0.0, _get_radius() * (JUMP_SCALE_MULTIPLIER.y - 1.0))
+func _dash():
+    is_dashing = true
+    dash_duration_remaining = DASH_TIME
+    velocity.y = 0
+    if facing_right:
+        velocity.x = DASH_ACCEL
+    else:
+        velocity.x = -DASH_ACCEL
+    _emit()
+    # TODO: Replace with dash sfx
+    Sfx.play(Sfx.JUMP)
+    _launch(true)
 
-    var duration_a := JUMP_DURATION_SEC * 0.25
-    var duration_b := JUMP_DURATION_SEC - duration_a
-    jump_tween.interpolate_method(
+func _emit():
+    var bit_size = DEFAULT_BIT_SIZE
+    _set_size(size - bit_size)
+    var level = get_tree().get_nodes_in_group('levels')[0]
+    
+    var bit = Bit.instance()
+    level.add_child(bit)
+    bit.size = bit_size
+    bit.velocity = -velocity * 0.5
+    bit.position = position - (_get_radius() + bit.get_radius() + 0.1) * velocity.normalized()
+
+func _launch(is_dash):
+    var scale_multiplier = LAUNCH_SCALE_MULTIPLIER
+    var displacement = Vector2(0.0, _get_radius() * (scale_multiplier.y - 1.0))
+    if is_dash:
+        scale_multiplier = Vector2(LAUNCH_SCALE_MULTIPLIER.y, LAUNCH_SCALE_MULTIPLIER.x)
+        displacement = Vector2(_get_radius() * (scale_multiplier.x - 1.0), 0.0)
+
+    var duration_a := LAUNCH_DURATION_SEC * 0.25
+    var duration_b := LAUNCH_DURATION_SEC - duration_a
+    launch_tween.interpolate_method(
             self,
             "_scale",
             Vector2.ONE,
-            JUMP_SCALE_MULTIPLIER,
+            scale_multiplier,
             duration_a,
             Tween.TRANS_BACK,
             Tween.EASE_IN_OUT)
-    jump_tween.interpolate_property(
+    launch_tween.interpolate_property(
             $Sprite,
             "position",
             Vector2.ZERO,
@@ -119,16 +149,16 @@ func _jump():
             duration_a,
             Tween.TRANS_BACK,
             Tween.EASE_IN_OUT)
-    jump_tween.interpolate_method(
+    launch_tween.interpolate_method(
             self,
             "_scale",
-            JUMP_SCALE_MULTIPLIER,
+            scale_multiplier,
             Vector2.ONE,
             duration_b,
             Tween.TRANS_BACK,
             Tween.EASE_IN_OUT,
             duration_a)
-    jump_tween.interpolate_property(
+    launch_tween.interpolate_property(
             $Sprite,
             "position",
             displacement,
@@ -137,7 +167,7 @@ func _jump():
             Tween.TRANS_BACK,
             Tween.EASE_IN_OUT,
             duration_a)
-    jump_tween.start()
+    launch_tween.start()
 
 func _impact(is_wall):
     var scale_multiplier = IMPACT_SCALE_MULTIPLIER
@@ -152,7 +182,7 @@ func _impact(is_wall):
             self,
             "_scale",
             Vector2.ONE,
-            JUMP_SCALE_MULTIPLIER,
+            scale_multiplier,
             duration_a,
             Tween.TRANS_QUAD,
             Tween.EASE_OUT)
@@ -167,7 +197,7 @@ func _impact(is_wall):
     impact_tween.interpolate_method(
             self,
             "_scale",
-            JUMP_SCALE_MULTIPLIER,
+            scale_multiplier,
             Vector2.ONE,
             duration_b,
             Tween.TRANS_BACK,
@@ -186,29 +216,6 @@ func _impact(is_wall):
 
 func _scale(multiplier: Vector2):
     $Sprite.scale = multiplier * DEFAULT_SPRITE_SCALE * _get_radius()
-
-func _dash():
-    is_dashing = true
-    dash_duration_remaining = DASH_TIME
-    velocity.y = 0
-    if facing_right:
-        velocity.x = DASH_ACCEL
-    else:
-        velocity.x = -DASH_ACCEL
-    _emit()
-    # TODO: Replace with dash sfx
-    Sfx.play(Sfx.JUMP)
-
-func _emit():
-    var bit_size = DEFAULT_BIT_SIZE
-    _set_size(size - bit_size)
-    var level = get_tree().get_nodes_in_group('levels')[0]
-    
-    var bit = Bit.instance()
-    level.add_child(bit)
-    bit.size = bit_size
-    bit.velocity = -velocity * 0.5
-    bit.position = position - (_get_radius() + bit.get_radius() + 0.1) * velocity.normalized()
 
 func _get_radius():
     return Constants.SIZE_SCALE * sqrt(size)
