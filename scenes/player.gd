@@ -14,7 +14,6 @@ const GRAVITY = 30.0
 const TERM_VEL = JUMP_ACCEL * 2
 
 const DEFAULT_BIT_SIZE = 1
-const DEFAULT_SPRITE_SCALE = Vector2(0.006, 0.006)
 
 const JUMP_TIME = 0.25
 const DASH_TIME = 0.15
@@ -351,7 +350,7 @@ func _grow(size_delta: int):
     impact_tween.start()
 
 func _interpolate_scale(multiplier: Vector2):
-    $Sprite.scale = multiplier * DEFAULT_SPRITE_SCALE * _get_radius()
+    $Sprite.scale = multiplier * Constants.DEFAULT_SPRITE_SCALE * _get_radius()
 
 func _get_radius() -> float:
     return Constants.SIZE_SCALE * sqrt(size)
@@ -359,7 +358,7 @@ func _get_radius() -> float:
 func _update_size():
     $CollisionShape2D.shape.radius = _get_radius()
     $Area2D/CollisionShape2D.shape.radius = _get_radius()
-    $Sprite.scale = DEFAULT_SPRITE_SCALE * _get_radius()
+    $Sprite.scale = Constants.DEFAULT_SPRITE_SCALE * _get_radius()
 
 func _update_sprite_flip():
     $Sprite.flip_h = not facing_right

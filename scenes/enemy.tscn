@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://scenes/enemy.gd" type="Script" id=1]
+[ext_resource path="res://assets/images/enemy_edible.png" type="Texture" id=2]
 
 [node name="Enemy" type="KinematicBody2D" groups=[
 "enemies",
@@ -18,3 +19,6 @@ cast_to = Vector2( 0, 1 )
 [node name="FloorDetectorRight" type="RayCast2D" parent="."]
 enabled = true
 cast_to = Vector2( 0, 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )

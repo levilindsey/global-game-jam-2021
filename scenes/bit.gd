@@ -2,7 +2,6 @@ extends KinematicBody2D
 class_name Bit
 
 const SPRITE_SCALE_MULTIPLIER := 0.0100125
-const DEFAULT_SPRITE_SCALE = Vector2(0.006, 0.006)
 
 export var size := 1 setget _set_size,_get_size
 
@@ -58,7 +57,7 @@ func get_radius():
 func _update_size():
     $CollisionShape2D.shape.radius = get_radius()
     $Area2D/CollisionShape2D.shape.radius = get_radius()
-    $Sprite.scale = get_radius() * DEFAULT_SPRITE_SCALE #Vector2(SPRITE_SCALE_MULTIPLIER, SPRITE_SCALE_MULTIPLIER)
+    $Sprite.scale = get_radius() * Constants.DEFAULT_SPRITE_SCALE #Vector2(SPRITE_SCALE_MULTIPLIER, SPRITE_SCALE_MULTIPLIER)
 
 func destroy():
     i_was_eaten = true

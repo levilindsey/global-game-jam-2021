@@ -14,10 +14,11 @@ var _is_ready := false
 
 func _ready():
     _is_ready = true
+    $CollisionShape2D.shape = CircleShape2D.new()
     if spiky:
-        $CollisionShape2D.shape = RectangleShape2D.new()
+        $Sprite.texture = preload("res://assets/images/enemy_inedible.png")
     else:
-        $CollisionShape2D.shape = CircleShape2D.new()
+        $Sprite.texture = preload("res://assets/images/enemy_edible.png")
     _update_size()
 
 func _physics_process(_delta):
@@ -31,18 +32,17 @@ func _physics_process(_delta):
         velocity.y = 0
 
     velocity = move_and_slide(velocity, Vector2.UP)
+    $Sprite.flip_h = direction != 1
 
 func get_radius():
     return Constants.SIZE_SCALE * sqrt(size)
 
 func _update_size():
     var radius = get_radius()
-    if spiky:
-        $CollisionShape2D.shape.extents = Vector2(radius, radius)
-    else:
-        $CollisionShape2D.shape.radius = radius
+    $CollisionShape2D.shape.radius = radius
     $FloorDetectorLeft.position = Vector2(-radius, radius)
     $FloorDetectorRight.position = Vector2(radius, radius)
+    $Sprite.scale = radius * Constants.DEFAULT_SPRITE_SCALE
 
 func _update_direction():
     for i in get_slide_count():
