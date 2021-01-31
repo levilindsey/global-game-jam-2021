@@ -39,6 +39,10 @@ onready var impact_tween = Tween.new()
 const IMPACT_SCALE_MULTIPLIER := Vector2(1.25, 0.75)
 const IMPACT_DURATION_SEC := 0.25
 
+onready var growth_tween = Tween.new()
+const GROWTH_SCALE_MULTIPLIER := Vector2(1.25, 0.95)
+const GROWTH_DURATION_SEC := 0.25
+
 onready var particles := PlayerParticles.new()
 
 var _is_ready := false
@@ -63,6 +67,7 @@ func _ready():
     add_child(particles)
     add_child(launch_tween)
     add_child(impact_tween)
+    add_child(growth_tween)
 
 func _physics_process(delta):
     var target_horizontal = 0
@@ -193,6 +198,7 @@ func _launch(is_dash):
     var duration_b := LAUNCH_DURATION_SEC / Constants.TIME_SCALE - duration_a
     launch_tween.stop_all()
     impact_tween.stop_all()
+    growth_tween.stop_all()
     launch_tween.interpolate_method(
             self,
             "_interpolate_scale",
@@ -256,6 +262,7 @@ func _impact(side: int):
     var duration_b := IMPACT_DURATION_SEC / Constants.TIME_SCALE - duration_a
     launch_tween.stop_all()
     impact_tween.stop_all()
+    growth_tween.stop_all()
     impact_tween.interpolate_method(
             self,
             "_interpolate_scale",
@@ -292,10 +299,61 @@ func _impact(side: int):
             duration_a)
     impact_tween.start()
 
+func _grow(size_delta: int):
+    var old_radius := _get_radius()
+    _set_size(size + size_delta)
+    var new_radius := _get_radius()
+    
+    var start_multiplier = Vector2.ONE * old_radius / new_radius
+    var middle_multiplier = GROWTH_SCALE_MULTIPLIER
+    var end_multiplier = Vector2.ONE
+    var displacement = Vector2(0.0, 0.0)
+    
+    var duration_a := GROWTH_DURATION_SEC / Constants.TIME_SCALE * 0.25
+    var duration_b := GROWTH_DURATION_SEC / Constants.TIME_SCALE - duration_a
+    launch_tween.stop_all()
+    impact_tween.stop_all()
+    growth_tween.stop_all()
+    impact_tween.interpolate_method(
+            self,
+            "_interpolate_scale",
+            start_multiplier,
+            middle_multiplier,
+            duration_a,
+            Tween.TRANS_QUAD,
+            Tween.EASE_OUT)
+    impact_tween.interpolate_property(
+            $Sprite,
+            "position",
+            Vector2.ZERO,
+            displacement,
+            duration_a,
+            Tween.TRANS_QUAD,
+            Tween.EASE_OUT)
+    impact_tween.interpolate_method(
+            self,
+            "_interpolate_scale",
+            middle_multiplier,
+            end_multiplier,
+            duration_b,
+            Tween.TRANS_BACK,
+            Tween.EASE_OUT,
+            duration_a)
+    impact_tween.interpolate_property(
+            $Sprite,
+            "position",
+            displacement,
+            Vector2.ZERO,
+            duration_b,
+            Tween.TRANS_BACK,
+            Tween.EASE_OUT,
+            duration_a)
+    impact_tween.start()
+
 func _interpolate_scale(multiplier: Vector2):
     $Sprite.scale = multiplier * DEFAULT_SPRITE_SCALE * _get_radius()
 
-func _get_radius():
+func _get_radius() -> float:
     return Constants.SIZE_SCALE * sqrt(size)
 
 func _update_size():
@@ -309,13 +367,13 @@ func _update_sprite_flip():
 
 func _on_Area2D_body_entered(body):
     if body.is_in_group("bits") and body.can_be_eaten:
-        _set_size(size + body.size)
+        _grow(body.size)
         body.destroy()
     if body.is_in_group("enemies"):
         if body.spiky or size < body.size:
             Nav.get_level_page().reset()
         else:
-            _set_size(size + body.size)
+            _grow(body.size)
             body.destroy()
 
 func _check_tile() -> void:
