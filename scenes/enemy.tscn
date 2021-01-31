@@ -21,4 +21,5 @@ enabled = true
 cast_to = Vector2( 0, 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 0.085, 0.085 )
 texture = ExtResource( 2 )
