@@ -29,11 +29,11 @@ var was_on_floor = false
 var was_on_wall = false
 
 onready var jump_tween = Tween.new()
-const JUMP_SCALE_MULTIPLIER := Vector2(0.25, 2)
+const JUMP_SCALE_MULTIPLIER := Vector2(0.85, 1.15)
 const JUMP_DURATION_SEC := 0.5
 
 onready var impact_tween = Tween.new()
-const IMPACT_SCALE_MULTIPLIER := Vector2(1.5, 0.5)
+const IMPACT_SCALE_MULTIPLIER := Vector2(1.25, 0.75)
 const IMPACT_DURATION_SEC := 0.25
 
 var _is_ready := false
@@ -103,9 +103,9 @@ func _jump():
 
     var duration_a := JUMP_DURATION_SEC * 0.25
     var duration_b := JUMP_DURATION_SEC - duration_a
-    jump_tween.interpolate_property(
-            $Sprite,
-            "scale_multiplier",
+    jump_tween.interpolate_method(
+            self,
+            "_scale",
             Vector2.ONE,
             JUMP_SCALE_MULTIPLIER,
             duration_a,
@@ -119,9 +119,9 @@ func _jump():
             duration_a,
             Tween.TRANS_BACK,
             Tween.EASE_IN_OUT)
-    jump_tween.interpolate_property(
-            $Sprite,
-            "scale_multiplier",
+    jump_tween.interpolate_method(
+            self,
+            "_scale",
             JUMP_SCALE_MULTIPLIER,
             Vector2.ONE,
             duration_b,
@@ -148,9 +148,9 @@ func _impact(is_wall):
 
     var duration_a := IMPACT_DURATION_SEC * 0.25
     var duration_b := IMPACT_DURATION_SEC - duration_a
-    impact_tween.interpolate_property(
-            $Sprite,
-            "scale_multiplier",
+    impact_tween.interpolate_method(
+            self,
+            "_scale",
             Vector2.ONE,
             JUMP_SCALE_MULTIPLIER,
             duration_a,
@@ -164,9 +164,9 @@ func _impact(is_wall):
             duration_a,
             Tween.TRANS_QUAD,
             Tween.EASE_OUT)
-    impact_tween.interpolate_property(
-            $Sprite,
-            "scale_multiplier",
+    impact_tween.interpolate_method(
+            self,
+            "_scale",
             JUMP_SCALE_MULTIPLIER,
             Vector2.ONE,
             duration_b,
@@ -183,6 +183,9 @@ func _impact(is_wall):
             Tween.EASE_OUT,
             duration_a)
     impact_tween.start()
+
+func _scale(multiplier: Vector2):
+    $Sprite.scale = multiplier * DEFAULT_SPRITE_SCALE * _get_radius()
 
 func _dash():
     is_dashing = true
