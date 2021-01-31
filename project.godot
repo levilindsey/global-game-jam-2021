@@ -89,6 +89,11 @@ Music="*res://scripts/music.gd"
 Nav="*res://scripts/navigation.gd"
 Sfx="*res://scripts/sfx.gd"
 
+[display]
+
+window/stretch/mode="2d"
+window/stretch/aspect="keep"
+
 [input]
 
 move_left={
