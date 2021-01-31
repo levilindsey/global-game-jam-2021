@@ -27,8 +27,10 @@ func _input(event):
                 get_tree().quit()
 
 func _notification(notification: int) -> void:
-    if notification == MainLoop.NOTIFICATION_WM_FOCUS_OUT:
-        set_pause(true)
+    # TODO: Reenable if we want; this was causing startup issues
+    pass
+    #if notification == MainLoop.NOTIFICATION_WM_FOCUS_OUT:
+    #    set_pause(true)
 
 func set_pause(is_paused: bool) -> void:
     get_tree().set_pause(is_paused)
