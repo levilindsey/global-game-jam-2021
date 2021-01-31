@@ -43,13 +43,9 @@ var level: Node2D
 func win() -> void:
     print("You win!")
     
-    # FIXME: remove
-    if true:
-        Nav.open(Nav.GAME_OVER_PAGE)
-        return
-    
     if LEVEL_PROGRESSION.size() == level_index + 1:
         print("You beat our game!!")
+        yield(_reset_level(), "completed")
         Nav.open(Nav.GAME_OVER_PAGE)
     else:
         level_index = min(LEVEL_PROGRESSION.size() - 1, level_index + 1)
@@ -66,11 +62,14 @@ func _fade_out_level():
     yield(get_tree().create_timer(0.7), "timeout")
     level.queue_free()
 
+func _reset_level():
+    Utils.get_child_by_type(level, Player, true).destroy()
+    yield(get_tree().create_timer(LOSE_ANIM_DELAY), "timeout")
+    yield(_fade_out_level(), "completed")
+
 func reset() -> void:
     if level != null:
-        Utils.get_child_by_type(level, Player, true).destroy()
-        yield(get_tree().create_timer(LOSE_ANIM_DELAY), "timeout")
-        yield(_fade_out_level(), "completed")
+        yield(_reset_level(), "completed")
     var level_type: int = LEVEL_PROGRESSION[level_index]
     level = _LEVEL_PACKED_SCENES[level_type].instance()
     add_child(level)

@@ -12,7 +12,7 @@
 [node name="level_logic" parent="." instance=ExtResource( 3 )]
 
 [node name="player" parent="level_logic" instance=ExtResource( 1 )]
-position = Vector2( -627.035, -241.66 )
+position = Vector2( -632.692, -285.501 )
 
 [node name="Background" parent="level_logic" instance=ExtResource( 5 )]
 
