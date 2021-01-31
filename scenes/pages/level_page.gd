@@ -35,7 +35,7 @@ const LEVEL_SWITCH_DELAY = 0.3
 
 
 ### --- CHANGE THIS TO TEST YOUR LEVEL. --- ###
-var level_index := 1
+var level_index := 0
 
 
 var level: Node2D
