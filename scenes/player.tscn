@@ -5,13 +5,13 @@
 [ext_resource path="res://assets/images/scratch/player.png" type="Texture" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 113.137
+radius = 14.1421
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 113.137
+radius = 14.1421
 
 [node name="player" type="KinematicBody2D"]
-position = Vector2( 0, 1.08095e+06 )
+position = Vector2( 0, 1.09022e+06 )
 collision_layer = 0
 script = ExtResource( 1 )
 
@@ -37,6 +37,6 @@ drag_margin_bottom = 0.1
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
-scale = Vector2( 0.678823, 0.678823 )
+scale = Vector2( 0.0848528, 0.0848528 )
 texture = ExtResource( 3 )
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]

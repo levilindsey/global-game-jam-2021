@@ -17,7 +17,7 @@ extents = Vector2( 112.335, 10 )
 [node name="level_logic" parent="." instance=ExtResource( 3 )]
 
 [node name="player" parent="level_logic" instance=ExtResource( 1 )]
-position = Vector2( 8.47571, -63.5678 )
+position = Vector2( 8.47507, 20.8836 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="level_logic"]
 position = Vector2( -1.05944, 45.0272 )

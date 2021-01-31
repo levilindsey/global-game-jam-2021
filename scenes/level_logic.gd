@@ -1,3 +1,4 @@
+tool
 extends Node2D
 
 const _TILEMAP_SCALE := 0.15
