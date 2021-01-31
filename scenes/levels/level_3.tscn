@@ -47,6 +47,11 @@ size = 5
 position = Vector2( -279.382, -129.393 )
 size = 2
 
+[node name="Enemy3" parent="level_logic/Enemies" instance=ExtResource( 6 )]
+position = Vector2( -743.557, -129.813 )
+size = 2
+spiky = true
+
 [node name="Enemy2" parent="level_logic/Enemies" instance=ExtResource( 6 )]
 position = Vector2( 498.749, 62.2586 )
 size = 5
