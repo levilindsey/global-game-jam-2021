@@ -13,40 +13,37 @@
 next_level = ""
 
 [node name="player" parent="level_logic" instance=ExtResource( 1 )]
-position = Vector2( -97.6118, -21.9499 )
+position = Vector2( -805.15, -399.656 )
+size = 1
 
 [node name="Background" parent="level_logic" instance=ExtResource( 5 )]
 
 [node name="TileMap" parent="level_logic" instance=ExtResource( 4 )]
 scale = Vector2( 0.15, 0.15 )
-tile_data = PoolIntArray( -131073, 4, 0, -196608, 5, 0, -7, 2, 0, -65528, 1, 196608, 131064, 1, 196609, 131065, 1, 196610, 131066, 1, 196610, 131067, 1, 196610, 131068, 1, 196610, 131069, 1, 196610, 131070, 1, 196610, 131071, 1, 196610, 65536, 1, 196610, 65537, 1, 196610, 65538, 1, 196610, 65539, 1, 196610, 65540, 1, 196610, 65541, 1, 196610, 65542, 1, 196610, 65543, 1, 196610, 65544, 1, 196611 )
+tile_data = PoolIntArray( -589809, 4, 0, -524276, 1, 196609, -524275, 1, 196610, -524274, 1, 196610, -524273, 1, 196611, -393209, 1, 196609, -393208, 1, 196610, -393207, 1, 196610, -393206, 1, 196611, -262142, 1, 196609, -262141, 1, 196610, -262140, 1, 196610, -262139, 1, 196611, -65539, 1, 196609, -65538, 1, 196610, -65537, 1, 196610, -131072, 1, 196611, 65528, 1, 196609, 65529, 1, 196610, 65530, 1, 196610, 65531, 1, 196611, 196595, 1, 196609, 196596, 1, 196610, 196597, 1, 196610, 196598, 1, 196611, 262119, 2, 0, 262134, 2, 0, 196613, 2, 0, 393191, 1, 196609, 393192, 1, 196610, 393193, 1, 196610, 393194, 1, 196610, 393195, 1, 196610, 393196, 1, 196610, 393197, 1, 196610, 393198, 1, 196610, 393199, 1, 196610, 393200, 1, 196610, 393201, 1, 196610, 393202, 1, 196610, 393203, 1, 196610, 393204, 1, 196610, 393205, 1, 196610, 393206, 1, 196610, 393207, 1, 196610, 393208, 1, 196610, 393209, 1, 196610, 393210, 1, 196610, 393211, 1, 196610, 393212, 1, 196610, 393213, 1, 196610, 393214, 1, 196610, 393215, 1, 196610, 327680, 1, 196610, 327681, 1, 196610, 327682, 1, 196610, 327683, 1, 196610, 327684, 1, 196610, 327685, 1, 196610, 327686, 1, 196610, 327687, 1, 196610, 327688, 1, 196610, 327689, 1, 196610, 327690, 1, 196610, 327691, 1, 196610, 327692, 1, 196610, 327693, 1, 196610, 327694, 1, 196610, 327695, 1, 196610, 327696, 1, 196610, 327697, 1, 196610, 327698, 1, 196610, 327699, 1, 196611 )
 
 [node name="Bits" type="Node2D" parent="level_logic"]
 
-[node name="Bit" parent="level_logic/Bits" instance=ExtResource( 2 )]
-position = Vector2( 124.487, 29.1352 )
-
 [node name="Bit8" parent="level_logic/Bits" instance=ExtResource( 2 )]
-
-[node name="Bit2" parent="level_logic/Bits" instance=ExtResource( 2 )]
-position = Vector2( 225.666, -290.823 )
-
-[node name="Bit3" parent="level_logic/Bits" instance=ExtResource( 2 )]
-position = Vector2( -185.935, -165.806 )
+position = Vector2( -640.105, -476.367 )
 
 [node name="Bit4" parent="level_logic/Bits" instance=ExtResource( 2 )]
-position = Vector2( -113.892, -228.844 )
-
-[node name="Bit5" parent="level_logic/Bits" instance=ExtResource( 2 )]
-position = Vector2( 140.379, -201.828 )
+position = Vector2( -725.873, -398.906 )
 
 [node name="Bit6" parent="level_logic/Bits" instance=ExtResource( 2 )]
-position = Vector2( 69.3953, -7.41625 )
+position = Vector2( -555.691, -559.611 )
 
 [node name="Bit7" parent="level_logic/Bits" instance=ExtResource( 2 )]
-position = Vector2( 321.018, 21.719 )
+position = Vector2( 408.284, -250.827 )
+
+[node name="Bit9" parent="level_logic/Bits" instance=ExtResource( 2 )]
+position = Vector2( 294.249, -248.154 )
 
 [node name="Enemies" type="Node2D" parent="level_logic"]
 
 [node name="Enemy" parent="level_logic/Enemies" instance=ExtResource( 6 )]
-position = Vector2( 321.595, -54.8066 )
+position = Vector2( -462.537, -641.102 )
+size = 2
+
+[node name="Enemy2" parent="level_logic/Enemies" instance=ExtResource( 6 )]
+position = Vector2( 294.773, -251.952 )
