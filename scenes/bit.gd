@@ -18,6 +18,7 @@ func _ready() -> void:
     _is_ready = true
     var circle := CircleShape2D.new()
     $CollisionShape2D.shape = circle
+    $Area2D/CollisionShape2D.shape = CircleShape2D.new()
     _update_size()
 
 func _physics_process(delta):
