@@ -7,11 +7,9 @@
 [ext_resource path="res://scenes/background.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/enemy.tscn" type="PackedScene" id=6]
 
-
 [node name="level_4" type="Node2D"]
 
 [node name="level_logic" parent="." instance=ExtResource( 3 )]
-next_level = ""
 
 [node name="player" parent="level_logic" instance=ExtResource( 1 )]
 position = Vector2( -97.6118, -21.9499 )
