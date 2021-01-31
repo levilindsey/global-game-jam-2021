@@ -52,7 +52,7 @@ func _update_direction():
     
     for i in get_slide_count():
         var collision = get_slide_collision(i)
-        if collision.collider.is_in_group("enemies"):
+        if collision.collider and collision.collider.is_in_group("enemies"):
             direction = -direction
     
     if not $FloorDetectorLeft.is_colliding():

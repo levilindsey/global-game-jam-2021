@@ -31,6 +31,9 @@ const LEVEL_PROGRESSION := [
     LEVEL_5,
 ]
 
+# A slight delay to make level switching feel more deliberate.
+const LEVEL_SWITCH_DELAY = 0.3
+
 var level_index := 0
 var level: Node2D
 
@@ -45,9 +48,16 @@ func lose() -> void:
     print("You lose!")
     reset()
 
+func _fade_out_level():
+    var transition = level.get_node("level_logic/transition")
+    transition.fade_out()
+    yield(transition, "fade_complete")
+    yield(get_tree().create_timer(0.7), "timeout")
+    level.queue_free()
+
 func reset() -> void:
     if level != null:
-        level.queue_free()
+        yield(_fade_out_level(), "completed")
     var level_type: int = LEVEL_PROGRESSION[level_index]
     level = _LEVEL_PACKED_SCENES[level_type].instance()
     add_child(level)
