@@ -4,13 +4,14 @@ export (bool) var start_immediately = true
 onready var fade = $fade
 onready var tween = Tween.new()
 
-const DURATION = 2.0
+const DURATION = 1
 
 signal fade_complete
 
 func _ready():
     add_child(tween)
     tween.connect("tween_completed", self, "_on_tween_complete") 
+    fade.rect_size = get_viewport().size
 
     if start_immediately:
         set_cutoff(0)
