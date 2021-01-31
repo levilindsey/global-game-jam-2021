@@ -10,9 +10,10 @@
 [node name="level_2" type="Node2D"]
 
 [node name="level_logic" parent="." instance=ExtResource( 3 )]
+next_level = ""
 
 [node name="player" parent="level_logic" instance=ExtResource( 1 )]
-position = Vector2( -128.701, -101.999 )
+position = Vector2( -101.124, -211.954 )
 size = 1
 
 [node name="Background" parent="level_logic" instance=ExtResource( 5 )]
@@ -25,73 +26,46 @@ tile_data = PoolIntArray( -2883657, 1, 8, -2883656, 1, 10, -2883655, 1, 10, -288
 [node name="Bits" type="Node2D" parent="level_logic"]
 
 [node name="Bit" parent="level_logic/Bits" instance=ExtResource( 2 )]
-position = Vector2( -54.013, 624.635 )
-
-[node name="Bit15" parent="level_logic/Bits" instance=ExtResource( 2 )]
-position = Vector2( -54.013, 624.635 )
-
-[node name="Bit3" parent="level_logic/Bits" instance=ExtResource( 2 )]
-position = Vector2( -82.1428, 281.573 )
-
-[node name="Bit9" parent="level_logic/Bits" instance=ExtResource( 2 )]
-position = Vector2( -40.3323, 355.381 )
-
-[node name="Bit10" parent="level_logic/Bits" instance=ExtResource( 2 )]
-position = Vector2( -5.80874, 122.981 )
-
-[node name="Bit23" parent="level_logic/Bits" instance=ExtResource( 2 )]
-position = Vector2( -5.80874, 122.981 )
+position = Vector2( -52.6782, 640.319 )
 size = 2
 
-[node name="Bit17" parent="level_logic/Bits" instance=ExtResource( 2 )]
-position = Vector2( 535.455, 102.38 )
+[node name="Bit3" parent="level_logic/Bits" instance=ExtResource( 2 )]
+position = Vector2( -95.1575, 294.588 )
 
-[node name="Bit18" parent="level_logic/Bits" instance=ExtResource( 2 )]
-position = Vector2( 535.455, 102.38 )
-
-[node name="Bit19" parent="level_logic/Bits" instance=ExtResource( 2 )]
-position = Vector2( 535.455, 102.38 )
-
-[node name="Bit20" parent="level_logic/Bits" instance=ExtResource( 2 )]
-position = Vector2( 535.455, 102.38 )
+[node name="Bit23" parent="level_logic/Bits" instance=ExtResource( 2 )]
+position = Vector2( 2.534, 141.335 )
+size = 2
 
 [node name="Bit21" parent="level_logic/Bits" instance=ExtResource( 2 )]
-position = Vector2( 535.455, 102.38 )
+position = Vector2( 540.127, 141.424 )
+size = 4
 
 [node name="Bit4" parent="level_logic/Bits" instance=ExtResource( 2 )]
-position = Vector2( 551.416, 354.674 )
+position = Vector2( 558.424, 372.361 )
 
 [node name="Bit5" parent="level_logic/Bits" instance=ExtResource( 2 )]
-position = Vector2( 690.735, 457.972 )
-
-[node name="Bit11" parent="level_logic/Bits" instance=ExtResource( 2 )]
-position = Vector2( 789.12, 293.577 )
-
-[node name="Bit12" parent="level_logic/Bits" instance=ExtResource( 2 )]
-position = Vector2( 784.495, 321.747 )
-
-[node name="Bit13" parent="level_logic/Bits" instance=ExtResource( 2 )]
-position = Vector2( 798.37, 321.747 )
+position = Vector2( 695.073, 487.339 )
 
 [node name="Bit14" parent="level_logic/Bits" instance=ExtResource( 2 )]
-position = Vector2( 805.624, 307.406 )
+position = Vector2( 792.276, 372.146 )
+size = 3
 
 [node name="Bit6" parent="level_logic/Bits" instance=ExtResource( 2 )]
-position = Vector2( 619.751, 536.902 )
+position = Vector2( 618.75, 565.601 )
 
 [node name="Enemies" type="Node2D" parent="level_logic"]
 
 [node name="Enemy" parent="level_logic/Enemies" instance=ExtResource( 6 )]
-position = Vector2( 458.139, -149.643 )
+position = Vector2( 462.382, -129.844 )
 
 [node name="Enemy3" parent="level_logic/Enemies" instance=ExtResource( 6 )]
-position = Vector2( 265.639, 348.857 )
+position = Vector2( 268.642, 369.547 )
 size = 2
 
 [node name="Enemy4" parent="level_logic/Enemies" instance=ExtResource( 6 )]
-position = Vector2( 250.639, 119.357 )
+position = Vector2( 251.306, 139.046 )
 size = 1
 
 [node name="Enemy2" parent="level_logic/Enemies" instance=ExtResource( 6 )]
-position = Vector2( 156.649, 620.183 )
+position = Vector2( 156.649, 637.87 )
 size = 2
