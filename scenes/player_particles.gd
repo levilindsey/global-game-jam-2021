@@ -2,42 +2,31 @@ extends Node2D
 class_name PlayerParticles
 
 enum {
-    DASH,
+    DASH_EFFECT,
 }
 
-var player: Player
-var level_page: LevelPage
+const EFFECT_ANIMATION_PACKED_SCENES := {
+    DASH_EFFECT: preload("res://scenes/effects_animations/dash_effect_animation.tscn"),
+}
+
+var player
+var level_page
+
+# Dictionary<Node2D, Node2D>
+var effects := {}
 
 func play( \
         effect: int, \
         horizontal_sign := 0) -> void:
-    var path: String
-    match effect:
-        DASH:
-            path = JUMP_SIDEWAYS_EFFECT_ANIMATION_RESOURCE_PATH
-        _:
-            Utils.error()
-    
     var scale_x_sign: int = \
             horizontal_sign if \
             horizontal_sign != 0 else \
             pow(-1, randi() % 2)
     
-    var position: Vector2 = \
-            player.position + \
-            Vector2(0.0, \
-                    Constants.PLAYER_HALF_HEIGHT_DEFAULT * \
-                            Constants.PLAYER_SIZE_MULTIPLIER)
-    var scale := Vector2(scale_x_sign, 1)
-#    scale *= Constants.PLAYER_SIZE_MULTIPLIER
-    
-    var effect_animator: Node2D = Utils.add_scene( \
-            level, \
-            path, \
-            true, \
-            true)
-    effect_animator.position = position
-    effect_animator.scale = scale
+    var effect_animator: Node2D = EFFECT_ANIMATION_PACKED_SCENES[effect].instance()
+    level_page.add_child(effect_animator)
+    effect_animator.position = effect_animator.calc_position(player, horizontal_sign)
+    effect_animator.scale = Vector2(scale_x_sign, 1) * effect_animator.calc_scale(player)
     
     var sprite: AnimatedSprite = effect_animator.get_node("AnimatedSprite")
     sprite.frame = 0

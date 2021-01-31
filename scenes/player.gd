@@ -36,11 +36,16 @@ onready var impact_tween = Tween.new()
 const IMPACT_SCALE_MULTIPLIER := Vector2(1.25, 0.75)
 const IMPACT_DURATION_SEC := 0.25
 
+onready var particles := PlayerParticles.new()
+
 var _is_ready := false
 
 func _ready():
     _is_ready = true
     _update_size()
+    particles.player = self
+    particles.level_page = Nav.get_level_page()
+    add_child(particles)
     add_child(launch_tween)
     add_child(impact_tween)
 
@@ -70,7 +75,7 @@ func _physics_process(delta):
     # Apply gravity, but less so when dashing
     velocity.y = min(TERM_VEL, velocity.y + GRAVITY) * (DASH_GRAVITY * int(is_dashing) + (1 - int(is_dashing)))
     if jump_duration_remaining > 0:
-        jump_duration_remaining -= delta
+        jump_duration_remaining -= delta * Constants.TIME_SCALE
         if jump_duration_remaining < 0 or Input.is_action_just_released("jump"):
             jump_duration_remaining = 0.0
             velocity.y *= 0.5
@@ -82,19 +87,20 @@ func _physics_process(delta):
 
     # Special case for dashing
     if is_dashing:
-        dash_duration_remaining -= delta
+        dash_duration_remaining -= delta * Constants.TIME_SCALE
         if dash_duration_remaining <= 0:
             is_dashing = false
     else:
         velocity.x = lerp(velocity.x, target_horizontal, HORIZONTAL_ACCEL * delta)
     
-    velocity = move_and_slide(velocity, Vector2.UP)
+    velocity = move_and_slide(velocity * Constants.TIME_SCALE, Vector2.UP)
+    velocity /= Constants.TIME_SCALE
     
     _update_sprite_flip()
     _check_tile()
 
 func _jump():
-    jump_duration_remaining = JUMP_TIME
+    jump_duration_remaining = JUMP_TIME * Constants.TIME_SCALE
     velocity.y = -JUMP_ACCEL
     _emit()
     Sfx.play(Sfx.JUMP)
@@ -102,7 +108,7 @@ func _jump():
 
 func _dash():
     is_dashing = true
-    dash_duration_remaining = DASH_TIME
+    dash_duration_remaining = DASH_TIME * Constants.TIME_SCALE
     velocity.y = 0
     if facing_right:
         velocity.x = DASH_ACCEL
@@ -111,6 +117,7 @@ func _dash():
     _emit()
     # TODO: Replace with dash sfx
     Sfx.play(Sfx.JUMP)
+    particles.play(PlayerParticles.DASH_EFFECT, _get_horizontal_sign())
     _launch(true)
 
 func _emit():
@@ -131,8 +138,8 @@ func _launch(is_dash):
         scale_multiplier = Vector2(LAUNCH_SCALE_MULTIPLIER.y, LAUNCH_SCALE_MULTIPLIER.x)
         displacement = Vector2(_get_radius() * (scale_multiplier.x - 1.0), 0.0)
 
-    var duration_a := LAUNCH_DURATION_SEC * 0.25
-    var duration_b := LAUNCH_DURATION_SEC - duration_a
+    var duration_a := LAUNCH_DURATION_SEC * 0.25 * Constants.TIME_SCALE
+    var duration_b := LAUNCH_DURATION_SEC * Constants.TIME_SCALE - duration_a
     launch_tween.interpolate_method(
             self,
             "_scale",
@@ -176,8 +183,8 @@ func _impact(is_wall):
         scale_multiplier = Vector2(IMPACT_SCALE_MULTIPLIER.y, IMPACT_SCALE_MULTIPLIER.x)
         displacement = Vector2(_get_radius() * (scale_multiplier.x - 1.0), 0.0)
 
-    var duration_a := IMPACT_DURATION_SEC * 0.25
-    var duration_b := IMPACT_DURATION_SEC - duration_a
+    var duration_a := IMPACT_DURATION_SEC * 0.25 * Constants.TIME_SCALE
+    var duration_b := IMPACT_DURATION_SEC * Constants.TIME_SCALE - duration_a
     impact_tween.interpolate_method(
             self,
             "_scale",
@@ -264,3 +271,6 @@ func _set_size(value: int) -> void:
 
 func _get_size() -> int:
     return size
+
+func _get_horizontal_sign() -> int:
+    return 1 if facing_right else -1
