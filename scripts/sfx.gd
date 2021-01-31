@@ -6,12 +6,22 @@ const MIN_DB = -80.0
 const SFX_DB = -8.0
 
 enum {
+    DASH,
+    DEAD,
+    GOAL,
+    GROWTH,
     JUMP,
+    LAND,
 }
 
 const SAMPLES = {
     # Add sfx samples here.
-    JUMP: preload("res://assets/sfx/jump.wav"),
+    DASH: preload("res://assets/sfx/blob-dash.wav"),
+    DEAD: preload("res://assets/sfx/blob-dead.wav"),
+    GOAL: preload("res://assets/sfx/blob-goal.wav"),
+    GROWTH: preload("res://assets/sfx/blob-growth.wav"),
+    JUMP: preload("res://assets/sfx/blob-jump.wav"),
+    LAND: preload("res://assets/sfx/blob-land.wav"),
 }
 
 const POOL_SIZE = 8

@@ -71,6 +71,7 @@ func _ready():
 
 func destroy():
     _is_destroyed = true
+    Sfx.play(Sfx.DEAD)
     var tween := Tween.new()
     add_child(tween)
     tween.interpolate_property( \
@@ -201,8 +202,7 @@ func _dash():
     else:
         velocity.x = -DASH_ACCEL
     _emit()
-    # TODO: Replace with dash sfx
-    Sfx.play(Sfx.JUMP)
+    Sfx.play(Sfx.DASH)
     particles.play(PlayerParticles.BLOB_DASH_EFFECT, self, _get_horizontal_sign())
     _launch(true)
 
@@ -270,6 +270,7 @@ func _land():
     _update_sprite(SpriteVariants.MOVE)
 
 func _impact(side: int):
+    Sfx.play(Sfx.LAND)
     if side == Utils.FLOOR:
         _land()
     var scale_multiplier = IMPACT_SCALE_MULTIPLIER
@@ -330,6 +331,7 @@ func _impact(side: int):
     impact_tween.start()
 
 func _grow(size_delta: int):
+    Sfx.play(Sfx.GROWTH)
     var old_radius := _get_radius()
     _set_size(size + size_delta)
     var new_radius := _get_radius()
@@ -423,6 +425,7 @@ func _check_tile() -> void:
             if tile_name == Constants.SPIKES_TILE_NAME:
                 Nav.get_level_page().lose()
             elif tile_name == Constants.GOAL_TILE_NAME and not _is_winning:
+                Sfx.play(Sfx.GOAL)
                 _is_winning = true
                 Nav.get_level_page().win()
 

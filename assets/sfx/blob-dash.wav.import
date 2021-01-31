@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/blob-dash.wav-d265e5afe4f7e83757da2eb8892bf1ee.sample"
+
+[deps]
+
+source_file="res://assets/sfx/blob-dash.wav"
+dest_files=[ "res://.import/blob-dash.wav-d265e5afe4f7e83757da2eb8892bf1ee.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
