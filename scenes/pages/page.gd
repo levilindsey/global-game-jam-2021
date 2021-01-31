@@ -6,3 +6,6 @@ func _on_activated() -> void:
 
 func _on_deactivated() -> void:
     pass
+
+func get_is_active() -> bool:
+    return Nav.current_page == self

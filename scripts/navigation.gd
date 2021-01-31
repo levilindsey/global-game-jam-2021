@@ -6,6 +6,7 @@ enum {
     LEVEL_PAGE,
     PAUSE_PAGE,
     GAME_OVER_PAGE,
+    CONTROLS_PAGE,
 }
 
 const _MAIN_THEME := preload("res://assets/main_theme.tres")
@@ -21,6 +22,7 @@ onready var pages := {
     LEVEL_PAGE: preload("res://scenes/pages/level_page.tscn").instance(),
     PAUSE_PAGE: preload("res://scenes/pages/pause_page.tscn").instance(),
     GAME_OVER_PAGE: preload("res://scenes/pages/game_over_page.tscn").instance(),
+    CONTROLS_PAGE: preload("res://scenes/pages/controls_page.tscn").instance(),
 }
 var current_page: Page
 var previous_page: Page
