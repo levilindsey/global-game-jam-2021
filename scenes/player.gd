@@ -422,7 +422,7 @@ func _check_tile() -> void:
         var collision := get_slide_collision(i)
         if collision.collider is TileMap:
             var tilemap := collision.collider as TileMap
-            var tile_pos := tilemap.world_to_map(tilemap.to_local(position))
+            var tile_pos := tilemap.world_to_map(tilemap.to_local(collision.position))
 #            tile_pos -= Vector2(round(collision.normal.x), round(collision.normal.y))
             var tile_id := tilemap.get_cellv(tile_pos)
             var tile_name := tilemap.tile_set.tile_get_name(tile_id)

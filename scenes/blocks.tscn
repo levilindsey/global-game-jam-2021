@@ -10,4 +10,3 @@ cell_quadrant_size = 128
 cell_custom_transform = Transform2D( 256, 0, 0, 256, 0, 0 )
 collision_mask = 0
 format = 1
-tile_data = PoolIntArray( 65537, 11, 0, 327679, 16, 0, 262147, 21, 0, 393222, 6, 0 )

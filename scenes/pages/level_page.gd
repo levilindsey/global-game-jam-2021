@@ -36,7 +36,7 @@ const LOSE_ANIM_DELAY = 0.7
 
 
 ### --- CHANGE THIS TO TEST YOUR LEVEL. --- ###
-var level_index := 0
+var level_index := 1
 
 var level: Node2D
 
