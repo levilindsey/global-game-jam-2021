@@ -69,6 +69,7 @@ func _physics_process(delta):
     
     _update_size()
     _update_sprite_flip()
+    _check_tile()
 
 func _jump():
     jump_duration_remaining = JUMP_TIME
@@ -120,3 +121,21 @@ func _on_Area2D_body_entered(body):
         else:
             size += body.size
             body.destroy()
+
+func _check_tile() -> void:
+    for i in get_slide_count():
+        var collision := get_slide_collision(i)
+        if collision.collider is TileMap:
+            var tilemap := collision.collider as TileMap
+            var tile_pos := tilemap.world_to_map(tilemap.to_local(position))
+            tile_pos -= collision.normal
+            var tile_id := tilemap.get_cellv(tile_pos)
+            var tile_name := tilemap.tile_set.tile_get_name(tile_id)
+            if tile_name == Constants.SPIKES_TILE_NAME:
+                # You win!
+                print("You win!")
+                Nav.get_level_page().reset()
+            elif tile_name == Constants.GOAL_TILE_NAME:
+                # You lose!
+                print("You lose!")
+                Nav.get_level_page().reset()
