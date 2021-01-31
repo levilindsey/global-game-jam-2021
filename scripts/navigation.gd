@@ -9,6 +9,8 @@ enum {
     CONTROLS_PAGE,
 }
 
+const DEFAULT_DISPLAY_SIZE := Vector2(1024, 600)
+
 const _MAIN_THEME := preload("res://assets/main_theme.tres")
 
 const _TRANSPARENT_PAGES := [
@@ -65,8 +67,11 @@ func _ready() -> void:
 
 func _on_size_changed() -> void:
     var viewport_size := get_viewport().size
-    _page_opaque_wrapper.rect_size = viewport_size
-    _page_transparent_wrapper.rect_size = viewport_size
+    var display_scale := DEFAULT_DISPLAY_SIZE / viewport_size
+    _page_opaque_wrapper.rect_size = viewport_size * display_scale
+    _page_transparent_wrapper.rect_size = viewport_size * display_scale
+#    _page_opaque_wrapper.rect_scale = display_scale
+#    _page_transparent_wrapper.rect_scale = display_scale
     for page_type in pages:
         var page: Page = pages[page_type]
         page.rect_size = viewport_size
