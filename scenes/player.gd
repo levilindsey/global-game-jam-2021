@@ -113,7 +113,13 @@ func _physics_process(delta):
     
     _update_move_sprite()
 
+    var previous_y = velocity.y
     velocity = move_and_slide(velocity * Constants.TIME_SCALE, Vector2.UP)
+    
+    # Impact from a large fall.
+    if abs(velocity.y - previous_y) >= TERM_VEL - 100:
+        $Camera2D.shake(0.4, 20, size)
+    
     velocity /= Constants.TIME_SCALE
     
     _update_sprite_flip()
@@ -148,6 +154,7 @@ func _update_sprite(variant):
 
 func _dash():
     is_dashing = true
+    $Camera2D.shake(0.2, 10, 2)
     dash_duration_remaining = DASH_TIME * Constants.TIME_SCALE
     velocity.y = 0
     if facing_right:
