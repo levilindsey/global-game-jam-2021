@@ -88,7 +88,7 @@ func _emit():
     var bit = Bit.instance()
     level.add_child(bit)
     bit.size = bit_size
-    bit.linear_velocity = -velocity * 0.5
+    bit.velocity = -velocity * 0.5
     bit.position = position - (_get_radius() + bit.get_radius() + 0.1) * velocity.normalized()
 
 func _get_radius():
