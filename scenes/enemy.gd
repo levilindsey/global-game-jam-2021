@@ -7,6 +7,7 @@ export var spiky = false
 var speed := 100.0
 var velocity = Vector2.ZERO
 var direction = 1
+var was_on_wall = false
 
 const GRAVITY = 10.0
 
@@ -45,6 +46,10 @@ func _update_size():
     $Sprite.scale = radius * Constants.DEFAULT_SPRITE_SCALE
 
 func _update_direction():
+    if not was_on_wall and is_on_wall():
+        direction = -direction
+    was_on_wall = is_on_wall()
+    
     for i in get_slide_count():
         var collision = get_slide_collision(i)
         if collision.collider.is_in_group("enemies"):
