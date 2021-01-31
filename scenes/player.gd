@@ -308,7 +308,7 @@ func _update_sprite_flip():
     $core.flip_h = not facing_right
 
 func _on_Area2D_body_entered(body):
-    if body.is_in_group("bits"):
+    if body.is_in_group("bits") and body.can_be_eaten:
         _set_size(size + body.size)
         body.destroy()
     if body.is_in_group("enemies"):
