@@ -423,10 +423,10 @@ func _check_tile() -> void:
         if collision.collider is TileMap:
             var tilemap := collision.collider as TileMap
             var tile_pos := tilemap.world_to_map(tilemap.to_local(position))
-            tile_pos -= Vector2(round(collision.normal.x), round(collision.normal.y))
+#            tile_pos -= Vector2(round(collision.normal.x), round(collision.normal.y))
             var tile_id := tilemap.get_cellv(tile_pos)
             var tile_name := tilemap.tile_set.tile_get_name(tile_id)
-            if tile_name == Constants.SPIKES_TILE_NAME:
+            if tile_name == "spikes-up" or tile_name == "spikes-down" or tile_name == "spikes-left" or tile_name == "spikes-right":
                 Nav.get_level_page().lose()
 
 func _set_size(value: int) -> void:
