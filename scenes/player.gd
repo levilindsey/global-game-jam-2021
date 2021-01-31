@@ -28,6 +28,7 @@ var facing_right = true
 var is_airborne = false
 var is_moving = false
 var was_on_floor = false
+var was_on_ceiling = false
 var was_on_wall = false
 
 onready var launch_tween = Tween.new()
@@ -83,11 +84,14 @@ func _physics_process(delta):
         _dash()
     
     if not was_on_floor and is_on_floor():
-        _impact(false)
+        _impact(Utils.FLOOR)
+    if not was_on_ceiling and is_on_ceiling():
+        _impact(Utils.CEILING)
     if not was_on_wall and is_on_wall():
-        _impact(true)
+        _impact(Utils.get_which_wall_collided_for_body(self))
     
     was_on_floor = is_on_floor()
+    was_on_ceiling = is_on_ceiling()
     was_on_wall = is_on_wall()
     
     # Apply gravity, but less so when dashing
@@ -126,9 +130,8 @@ func _physics_process(delta):
     _check_tile()
 
 func _jump():
-    is_airborne = true
-    jump_duration_remaining = JUMP_TIME * Constants.TIME_SCALE
-    velocity.y = -JUMP_ACCEL
+    jump_duration_remaining = JUMP_TIME
+    is_airborne = true    velocity.y = -JUMP_ACCEL
     _emit()
     Sfx.play(Sfx.JUMP)
     _update_sprite(SpriteVariants.AIR)
@@ -154,9 +157,8 @@ func _update_sprite(variant):
 
 func _dash():
     is_dashing = true
-    $Camera2D.shake(0.2, 10, 2)
-    dash_duration_remaining = DASH_TIME * Constants.TIME_SCALE
-    velocity.y = 0
+    dash_duration_remaining = DASH_TIME
+    $Camera2D.shake(0.2, 10, 2)    velocity.y = 0
     if facing_right:
         velocity.x = DASH_ACCEL
     else:
@@ -183,34 +185,36 @@ func _launch(is_dash):
     var displacement = Vector2(0.0, _get_radius() * (scale_multiplier.y - 1.0))
     if is_dash:
         scale_multiplier = Vector2(LAUNCH_SCALE_MULTIPLIER.y, LAUNCH_SCALE_MULTIPLIER.x)
-        displacement = Vector2(_get_radius() * (scale_multiplier.x - 1.0), 0.0)
+        displacement = Vector2(_get_radius() * (scale_multiplier.y - 1.0) * _get_horizontal_sign(), 0.0)
 
-    var duration_a := LAUNCH_DURATION_SEC * 0.25 * Constants.TIME_SCALE
-    var duration_b := LAUNCH_DURATION_SEC * Constants.TIME_SCALE - duration_a
+    var duration_a := LAUNCH_DURATION_SEC / Constants.TIME_SCALE * 0.25
+    var duration_b := LAUNCH_DURATION_SEC / Constants.TIME_SCALE - duration_a
+    launch_tween.stop_all()
+    impact_tween.stop_all()
     launch_tween.interpolate_method(
             self,
-            "_scale",
+            "_interpolate_scale",
             Vector2.ONE,
             scale_multiplier,
             duration_a,
-            Tween.TRANS_BACK,
-            Tween.EASE_IN_OUT)
+            Tween.TRANS_SINE,
+            Tween.EASE_OUT)
     launch_tween.interpolate_property(
             $Sprite,
             "position",
             Vector2.ZERO,
             displacement,
             duration_a,
-            Tween.TRANS_BACK,
-            Tween.EASE_IN_OUT)
+            Tween.TRANS_SINE,
+            Tween.EASE_OUT)
     launch_tween.interpolate_method(
             self,
-            "_scale",
+            "_interpolate_scale",
             scale_multiplier,
             Vector2.ONE,
             duration_b,
             Tween.TRANS_BACK,
-            Tween.EASE_IN_OUT,
+            Tween.EASE_OUT,
             duration_a)
     launch_tween.interpolate_property(
             $Sprite,
@@ -219,7 +223,7 @@ func _launch(is_dash):
             Vector2.ZERO,
             duration_b,
             Tween.TRANS_BACK,
-            Tween.EASE_IN_OUT,
+            Tween.EASE_OUT,
             duration_a)
     launch_tween.start()
 
@@ -227,20 +231,31 @@ func _land():
     is_airborne = false
     _update_sprite(SpriteVariants.MOVE)
 
-func _impact(is_wall):
-    if not is_wall:
+func _impact(side: int):    if not is_wall:
         _land()
     var scale_multiplier = IMPACT_SCALE_MULTIPLIER
-    var displacement = Vector2(0.0, _get_radius() * (scale_multiplier.y - 1.0))
-    if is_wall:
-        scale_multiplier = Vector2(IMPACT_SCALE_MULTIPLIER.y, IMPACT_SCALE_MULTIPLIER.x)
-        displacement = Vector2(_get_radius() * (scale_multiplier.x - 1.0), 0.0)
-
-    var duration_a := IMPACT_DURATION_SEC * 0.25 * Constants.TIME_SCALE
-    var duration_b := IMPACT_DURATION_SEC * Constants.TIME_SCALE - duration_a
+    var displacement: Vector2
+    match side:
+        Utils.FLOOR:
+            displacement = Vector2(0.0, _get_radius() * (1.0 - scale_multiplier.y))
+        Utils.CEILING:
+            displacement = Vector2(0.0, _get_radius() * (scale_multiplier.y - 1.0))
+        Utils.LEFT_WALL:
+            scale_multiplier = Vector2(IMPACT_SCALE_MULTIPLIER.y, IMPACT_SCALE_MULTIPLIER.x)
+            displacement = Vector2(_get_radius() * (1.0 - scale_multiplier.y), 0.0)
+        Utils.RIGHT_WALL:
+            scale_multiplier = Vector2(IMPACT_SCALE_MULTIPLIER.y, IMPACT_SCALE_MULTIPLIER.x)
+            displacement = Vector2(_get_radius() * (scale_multiplier.y - 1.0), 0.0)
+        _:
+            assert(false)
+    
+    var duration_a := IMPACT_DURATION_SEC / Constants.TIME_SCALE * 0.25
+    var duration_b := IMPACT_DURATION_SEC / Constants.TIME_SCALE - duration_a
+    launch_tween.stop_all()
+    impact_tween.stop_all()
     impact_tween.interpolate_method(
             self,
-            "_scale",
+            "_interpolate_scale",
             Vector2.ONE,
             scale_multiplier,
             duration_a,
@@ -256,7 +271,7 @@ func _impact(is_wall):
             Tween.EASE_OUT)
     impact_tween.interpolate_method(
             self,
-            "_scale",
+            "_interpolate_scale",
             scale_multiplier,
             Vector2.ONE,
             duration_b,
@@ -274,7 +289,7 @@ func _impact(is_wall):
             duration_a)
     impact_tween.start()
 
-func _scale(multiplier: Vector2):
+func _interpolate_scale(multiplier: Vector2):
     $Sprite.scale = multiplier * DEFAULT_SPRITE_SCALE * _get_radius()
 
 func _get_radius():
