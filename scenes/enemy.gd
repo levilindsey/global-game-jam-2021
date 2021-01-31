@@ -18,6 +18,7 @@ func _ready():
         $CollisionShape2D.shape = RectangleShape2D.new()
     else:
         $CollisionShape2D.shape = CircleShape2D.new()
+    _update_size()
 
 func _physics_process(_delta):
     _update_direction()
