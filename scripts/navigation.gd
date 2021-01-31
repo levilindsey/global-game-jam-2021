@@ -64,8 +64,12 @@ func _ready() -> void:
             "_on_size_changed")
 
 func _on_size_changed() -> void:
-    _page_opaque_wrapper.rect_size = get_viewport().size
-    _page_transparent_wrapper.rect_size = get_viewport().size
+    var viewport_size := get_viewport().size
+    _page_opaque_wrapper.rect_size = viewport_size
+    _page_transparent_wrapper.rect_size = viewport_size
+    for page_type in pages:
+        var page: Page = pages[page_type]
+        page.rect_size = viewport_size
 
 func open(page_type: int) -> void:
     if current_page == pages[page_type]:
