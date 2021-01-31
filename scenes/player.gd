@@ -8,19 +8,21 @@ var velocity = Vector2.ZERO
 
 const HORIZONTAL_VEL = 300.0
 const HORIZONTAL_ACCEL = 10 # How quickly we accelerate to max speed
-const JUMP_ACCEL = 600.0
-const DASH_ACCEL = 800.0
+const JUMP_ACCEL = 700.0
+const DASH_ACCEL = 950.0
 const GRAVITY = 30.0
 const TERM_VEL = JUMP_ACCEL * 2
 
 const DEFAULT_BIT_SIZE = 1
 const DEFAULT_SPRITE_SCALE = Vector2(0.006, 0.006)
 
+const JUMP_TIME = 0.25
 const DASH_TIME = 0.15
 const DASH_GRAVITY = 0.5  # Percentage of normal gravity
 
 var is_dashing = false
 var dash_duration_remaining = 0.0
+var jump_duration_remaining = 0.0
 
 var facing_right = true
 
@@ -44,6 +46,11 @@ func _physics_process(delta):
     
     # Apply gravity, but less so when dashing
     velocity.y = min(TERM_VEL, velocity.y + GRAVITY) * (DASH_GRAVITY * int(is_dashing) + (1 - int(is_dashing)))
+    if jump_duration_remaining > 0:
+        jump_duration_remaining -= delta
+        if jump_duration_remaining < 0 or Input.is_action_just_released("jump"):
+            jump_duration_remaining = 0.0
+            velocity.y *= 0.5
     
     # Lerp horizontal movement
     var horizontal_accel = HORIZONTAL_ACCEL
@@ -64,6 +71,7 @@ func _physics_process(delta):
     _update_sprite_flip()
 
 func _jump():
+    jump_duration_remaining = JUMP_TIME
     velocity.y = -JUMP_ACCEL
     _emit()
     Sfx.play(Sfx.JUMP)
