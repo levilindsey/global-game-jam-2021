@@ -155,7 +155,7 @@ func _physics_process(delta):
     
     # Impact from a large fall.
     if abs(velocity.y - previous_y) >= TERM_VEL - 100:
-        $Camera2D.shake(0.4, 20, size)
+        $Camera2D.shake(0.4, 30, size * 2)
     
     velocity /= Constants.TIME_SCALE
     
