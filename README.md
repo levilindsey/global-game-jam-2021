@@ -1,6 +1,8 @@
-# global-game-jam-2021
+# OoboloO
 
 _**[Live demo](https://levilindsey.github.io/global-game-jam-2021/build/global-game-jam-2021.html)**._
+
+![A picture of the OoboloO blob character](assets/images/icons/icon-512.png)
 
 Theme: Lost and Found
 
