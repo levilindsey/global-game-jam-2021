@@ -16,6 +16,7 @@ extents = Vector2( 136.13, 14.3252 )
 [node name="kitchensink" type="Node2D"]
 
 [node name="level_logic" parent="." instance=ExtResource( 3 )]
+next_level = ""
 
 [node name="player" parent="level_logic" instance=ExtResource( 1 )]
 position = Vector2( 8.47571, -63.5678 )

@@ -18,16 +18,7 @@ func _ready():
 
 func _physics_process(_delta):
     _update_size()
-    
-    if $ObjectDetectorLeft.is_colliding():
-        direction = 1
-    elif $ObjectDetectorRight.is_colliding():
-        direction = -1
-    
-    if not $FloorDetectorLeft.is_colliding():
-        direction = 1
-    elif not $FloorDetectorRight.is_colliding():
-        direction = -1
+    _update_direction()
     
     if not $FloorDetectorLeft.is_colliding() and not $FloorDetectorRight.is_colliding():
         velocity.y += GRAVITY
@@ -49,8 +40,17 @@ func _update_size():
         $CollisionShape2D.shape.radius = radius
     $FloorDetectorLeft.position = Vector2(-radius, radius)
     $FloorDetectorRight.position = Vector2(radius, radius)
-    $ObjectDetectorLeft.position = Vector2(-radius-1, 0)
-    $ObjectDetectorRight.position = Vector2(radius+1, 0)
+
+func _update_direction():
+    for i in get_slide_count():
+        var collision = get_slide_collision(i)
+        if collision.collider.is_in_group("enemies"):
+            direction = -direction
+    
+    if not $FloorDetectorLeft.is_colliding():
+        direction = 1
+    elif not $FloorDetectorRight.is_colliding():
+        direction = -1
 
 func destroy():
     queue_free()
