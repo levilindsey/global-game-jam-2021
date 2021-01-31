@@ -8,10 +8,6 @@ Theme: Lost and Found
 
 -   Game engine: [Godot](https://godotengine.org/).
 
-## Assets used
-
--   bitforest background music: https://opengameart.org/content/bit-forest-ambient
-
 ## Licenses
 
 -   The code is published under the [MIT license](LICENSE).
