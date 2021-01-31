@@ -30,11 +30,14 @@ const LEVEL_PROGRESSION := [
     LEVEL_4,
     LEVEL_5,
 ]
-
 # A slight delay to make level switching feel more deliberate.
 const LEVEL_SWITCH_DELAY = 0.3
 
-var level_index := 0
+
+### --- CHANGE THIS TO TEST YOUR LEVEL. --- ###
+var level_index := 1
+
+
 var level: Node2D
 
 func win() -> void:

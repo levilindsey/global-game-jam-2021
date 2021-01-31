@@ -109,7 +109,7 @@ func _physics_process(delta):
     # Lerp horizontal movement
     var horizontal_accel = HORIZONTAL_ACCEL
     if abs(velocity.x) > abs(target_horizontal):
-        horizontal_accel = HORIZONTAL_ACCEL * 0.1
+        horizontal_accel = HORIZONTAL_ACCEL * 0.05
 
     # Special case for dashing
     if is_dashing:
@@ -381,7 +381,7 @@ func _check_tile() -> void:
         if collision.collider is TileMap:
             var tilemap := collision.collider as TileMap
             var tile_pos := tilemap.world_to_map(tilemap.to_local(position))
-            tile_pos -= collision.normal
+            tile_pos -= Vector2(round(collision.normal.x), round(collision.normal.y))
             var tile_id := tilemap.get_cellv(tile_pos)
             var tile_name := tilemap.tile_set.tile_get_name(tile_id)
             if tile_name == Constants.SPIKES_TILE_NAME:
