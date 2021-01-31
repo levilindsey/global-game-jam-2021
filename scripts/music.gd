@@ -70,6 +70,7 @@ class MusicBox extends Node:
 # Add music here
 # TODO: Replace with non-placeholder music!
 var bitforest = preload("res://assets/music/bitforest.ogg")
+var cautious_blob = preload("res://assets/music/cautious-blob.ogg")
 
 var level_musicbox
 
@@ -83,7 +84,7 @@ func _ready():
     _load_music()
 
 func _load_music():
-    level_musicbox = MusicBox.new(bitforest)
+    level_musicbox = MusicBox.new(cautious_blob)
     add_child(level_musicbox)
 
 func play_background():
