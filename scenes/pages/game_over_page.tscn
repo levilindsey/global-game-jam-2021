@@ -41,9 +41,9 @@ valign = 1
 
 [node name="Control" type="Control" parent="VBoxContainer"]
 margin_left = 218.0
-margin_top = 149.0
+margin_top = 150.0
 margin_right = 218.0
-margin_bottom = 357.0
+margin_bottom = 358.0
 rect_min_size = Vector2( 0, 208 )
 size_flags_horizontal = 4
 size_flags_vertical = 4

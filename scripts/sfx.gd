@@ -21,7 +21,7 @@ const SAMPLES = {
     GOAL: preload("res://assets/sfx/blob-goal.wav"),
     GROWTH: preload("res://assets/sfx/blob-growth.wav"),
     JUMP: preload("res://assets/sfx/blob-jump.wav"),
-    LAND: preload("res://assets/sfx/blob-land.wav"),
+    LAND: preload("res://assets/sfx/blob-land-better.wav"),
 }
 
 const POOL_SIZE = 8
