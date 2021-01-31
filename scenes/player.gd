@@ -131,7 +131,8 @@ func _physics_process(delta):
 
 func _jump():
     jump_duration_remaining = JUMP_TIME
-    is_airborne = true    velocity.y = -JUMP_ACCEL
+    is_airborne = true
+    velocity.y = -JUMP_ACCEL
     _emit()
     Sfx.play(Sfx.JUMP)
     _update_sprite(SpriteVariants.AIR)
@@ -158,7 +159,8 @@ func _update_sprite(variant):
 func _dash():
     is_dashing = true
     dash_duration_remaining = DASH_TIME
-    $Camera2D.shake(0.2, 10, 2)    velocity.y = 0
+    $Camera2D.shake(0.2, 10, 2)
+    velocity.y = 0
     if facing_right:
         velocity.x = DASH_ACCEL
     else:
@@ -231,7 +233,8 @@ func _land():
     is_airborne = false
     _update_sprite(SpriteVariants.MOVE)
 
-func _impact(side: int):    if not is_wall:
+func _impact(side: int):
+    if side == Utils.FLOOR:
         _land()
     var scale_multiplier = IMPACT_SCALE_MULTIPLIER
     var displacement: Vector2
