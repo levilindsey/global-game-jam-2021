@@ -11,7 +11,9 @@ radius = 14.1421
 [sub_resource type="CircleShape2D" id=2]
 radius = 14.1421
 
-[node name="player" type="KinematicBody2D"]
+[node name="player" type="KinematicBody2D" groups=[
+"player",
+]]
 collision_layer = 0
 script = ExtResource( 1 )
 

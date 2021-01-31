@@ -1,7 +1,20 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scenes/enemy.gd" type="Script" id=1]
 [ext_resource path="res://assets/images/enemy_edible.png" type="Texture" id=2]
+[ext_resource path="res://assets/images/scratch/frame0000.png" type="Texture" id=3]
+[ext_resource path="res://assets/images/scratch/frame0001.png" type="Texture" id=4]
+[ext_resource path="res://assets/images/scratch/frame0002.png" type="Texture" id=5]
+[ext_resource path="res://assets/images/scratch/frame0004.png" type="Texture" id=6]
+[ext_resource path="res://assets/images/scratch/frame0003.png" type="Texture" id=7]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 7 ), ExtResource( 6 ) ],
+"loop": true,
+"name": "default",
+"speed": 8.0
+} ]
 
 [node name="Enemy" type="KinematicBody2D" groups=[
 "enemies",
@@ -23,3 +36,7 @@ cast_to = Vector2( 0, 1 )
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 0.085, 0.085 )
 texture = ExtResource( 2 )
+
+[node name="SweatSprite" type="AnimatedSprite" parent="."]
+scale = Vector2( 0.085, 0.085 )
+frames = SubResource( 1 )

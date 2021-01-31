@@ -24,6 +24,7 @@ func _ready():
 
 func _physics_process(_delta):
     _update_direction()
+    _update_sweat()
     
     if not $FloorDetectorLeft.is_colliding() and not $FloorDetectorRight.is_colliding():
         velocity.y += GRAVITY
@@ -34,6 +35,7 @@ func _physics_process(_delta):
 
     velocity = move_and_slide(velocity, Vector2.UP)
     $Sprite.flip_h = direction != 1
+    $SweatSprite.flip_h = direction != 1
 
 func get_radius():
     return Constants.SIZE_SCALE * sqrt(size)
@@ -44,6 +46,18 @@ func _update_size():
     $FloorDetectorLeft.position = Vector2(-radius, radius)
     $FloorDetectorRight.position = Vector2(radius, radius)
     $Sprite.scale = radius * Constants.DEFAULT_SPRITE_SCALE
+    $SweatSprite.scale = radius * Constants.DEFAULT_SPRITE_SCALE
+
+func _update_sweat():
+    if spiky:
+        return
+    var player = get_tree().get_nodes_in_group("player")[0]
+    if player.size >= size:
+        # Player can eat us!
+        $SweatSprite.playing = true
+    else:
+        $SweatSprite.frame = 0
+        $SweatSprite.playing = false
 
 func _update_direction():
     if not was_on_wall and is_on_wall():
