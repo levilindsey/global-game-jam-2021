@@ -60,6 +60,7 @@ func _fade_out_level():
 
 func reset() -> void:
     if level != null:
+        Utils.get_child_by_type(level, Player, true).destroy()
         yield(_fade_out_level(), "completed")
     var level_type: int = LEVEL_PROGRESSION[level_index]
     level = _LEVEL_PACKED_SCENES[level_type].instance()

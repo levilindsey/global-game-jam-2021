@@ -1,8 +1,8 @@
 extends EffectAnimation
-class_name DashEffectAnimation
+class_name BlobJumpEffectAnimation
 
 const FRAME_SIZE_DEFAULT := Vector2(100, 100)
-const OFFSET_DEFAULT := Vector2(-50, 22)
+const OFFSET_DEFAULT := Vector2(25, -26)
 const SCALE_MULTIPLIER := 0.09
 
 func calc_position(player, horizontal_sign: int) -> Vector2:

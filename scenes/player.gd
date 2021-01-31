@@ -45,6 +45,7 @@ const GROWTH_DURATION_SEC := 0.25
 onready var particles := PlayerParticles.new()
 
 var _is_ready := false
+var _is_destroyed = false
 
 enum SpriteVariants {
     IDLE,
@@ -61,14 +62,42 @@ const CORE_SPRITE_AIR = preload("res://assets/images/player_air_core.png")
 func _ready():
     _is_ready = true
     _update_size()
-    particles.player = self
     particles.level_page = Nav.get_level_page()
     add_child(particles)
     add_child(launch_tween)
     add_child(impact_tween)
     add_child(growth_tween)
 
+func destroy():
+    _is_destroyed = true
+    var tween := Tween.new()
+    add_child(tween)
+    tween.interpolate_property( \
+            $Sprite, \
+            "scale", \
+            $Sprite.scale, \
+            Vector2.ZERO, \
+            0.1, \
+            Tween.TRANS_QUAD, \
+            Tween.EASE_IN)
+    tween.interpolate_property( \
+            $core, \
+            "scale", \
+            $core.scale, \
+            Vector2.ZERO, \
+            0.1, \
+            Tween.TRANS_QUAD, \
+            Tween.EASE_IN)
+    tween.start()
+    yield(get_tree().create_timer(0.1), "timeout")
+    particles.play(PlayerParticles.BLOB_EXPLODE_EFFECT, self)
+    yield(get_tree().create_timer(0.608), "timeout")
+    visible = false
+
 func _physics_process(delta):
+    if _is_destroyed:
+        return
+    
     var target_horizontal = 0
     if Input.is_action_pressed("move_left"):
         target_horizontal -= HORIZONTAL_VEL
@@ -141,6 +170,7 @@ func _jump():
     Sfx.play(Sfx.JUMP)
     _update_sprite(SpriteVariants.AIR)
     _launch(false)
+    particles.play(PlayerParticles.BLOB_JUMP_EFFECT, self)
 
 func _update_move_sprite():
     if not is_airborne:
@@ -172,7 +202,7 @@ func _dash():
     _emit()
     # TODO: Replace with dash sfx
     Sfx.play(Sfx.JUMP)
-    particles.play(PlayerParticles.DASH_EFFECT, _get_horizontal_sign())
+    particles.play(PlayerParticles.BLOB_DASH_EFFECT, self, _get_horizontal_sign())
     _launch(true)
 
 func _emit():
@@ -365,14 +395,19 @@ func _update_sprite_flip():
     $core.flip_h = not facing_right
 
 func _on_Area2D_body_entered(body):
+    if _is_destroyed:
+        return
+    
     if body.is_in_group("bits") and body.can_be_eaten:
         _grow(body.size)
+        particles.play(PlayerParticles.BIT_EXPLODE_EFFECT, body)
         body.destroy()
     if body.is_in_group("enemies"):
         if body.spiky or size < body.size:
             Nav.get_level_page().reset()
         else:
             _grow(body.size)
+            particles.play(PlayerParticles.ENEMY_EXPLODE_EFFECT, body)
             body.destroy()
 
 func _check_tile() -> void:
