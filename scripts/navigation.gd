@@ -34,12 +34,14 @@ func _ready() -> void:
     add_child(_main_page_canvas_layer)
     
     _page_opaque_wrapper.set_theme(_MAIN_THEME)
+    _page_opaque_wrapper.visible = false
     _main_page_canvas_layer.add_child(_page_opaque_wrapper)
     
     _page_transparent_wrapper.set_theme(_MAIN_THEME)
     var transparent_style := StyleBoxFlat.new()
     transparent_style.bg_color = Color.from_hsv(0, 0, 0, 0.2)
     _page_transparent_wrapper.add_stylebox_override("panel", transparent_style)
+    _page_transparent_wrapper.visible = false
     _main_page_canvas_layer.add_child(_page_transparent_wrapper)
     
     for page_type in pages:

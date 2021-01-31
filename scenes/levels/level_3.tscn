@@ -1,0 +1,51 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://scenes/player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/bit.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/level_logic.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/tilemap.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/background.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/enemy.tscn" type="PackedScene" id=6]
+
+[node name="level_3" type="Node2D"]
+
+[node name="level_logic" parent="." instance=ExtResource( 3 )]
+
+[node name="player" parent="level_logic" instance=ExtResource( 1 )]
+position = Vector2( -97.6118, -21.9499 )
+
+[node name="Background" parent="level_logic" instance=ExtResource( 5 )]
+
+[node name="TileMap" parent="level_logic" instance=ExtResource( 4 )]
+scale = Vector2( 0.15, 0.15 )
+tile_data = PoolIntArray( -131073, 4, 0, -196608, 5, 0, -7, 2, 0, -65528, 1, 196608, 131064, 1, 196609, 131065, 1, 196610, 131066, 1, 196610, 131067, 1, 196610, 131068, 1, 196610, 131069, 1, 196610, 131070, 1, 196610, 131071, 1, 196610, 65536, 1, 196610, 65537, 1, 196610, 65538, 1, 196610, 65539, 1, 196610, 65540, 1, 196610, 65541, 1, 196610, 65542, 1, 196610, 65543, 1, 196610, 65544, 1, 196611 )
+
+[node name="Bits" type="Node2D" parent="level_logic"]
+
+[node name="Bit" parent="level_logic/Bits" instance=ExtResource( 2 )]
+position = Vector2( 124.487, 29.1352 )
+
+[node name="Bit8" parent="level_logic/Bits" instance=ExtResource( 2 )]
+
+[node name="Bit2" parent="level_logic/Bits" instance=ExtResource( 2 )]
+position = Vector2( 225.666, -290.823 )
+
+[node name="Bit3" parent="level_logic/Bits" instance=ExtResource( 2 )]
+position = Vector2( -185.935, -165.806 )
+
+[node name="Bit4" parent="level_logic/Bits" instance=ExtResource( 2 )]
+position = Vector2( -113.892, -228.844 )
+
+[node name="Bit5" parent="level_logic/Bits" instance=ExtResource( 2 )]
+position = Vector2( 140.379, -201.828 )
+
+[node name="Bit6" parent="level_logic/Bits" instance=ExtResource( 2 )]
+position = Vector2( 69.3953, -7.41625 )
+
+[node name="Bit7" parent="level_logic/Bits" instance=ExtResource( 2 )]
+position = Vector2( 321.018, 21.719 )
+
+[node name="Enemies" type="Node2D" parent="level_logic"]
+
+[node name="Enemy" parent="level_logic/Enemies" instance=ExtResource( 6 )]
+position = Vector2( 321.595, -54.8066 )
