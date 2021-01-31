@@ -42,6 +42,12 @@ var level: Node2D
 
 func win() -> void:
     print("You win!")
+    
+    # FIXME: remove
+    if true:
+        Nav.open(Nav.GAME_OVER_PAGE)
+        return
+    
     if LEVEL_PROGRESSION.size() == level_index + 1:
         print("You beat our game!!")
         Nav.open(Nav.GAME_OVER_PAGE)

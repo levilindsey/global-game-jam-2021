@@ -15,7 +15,6 @@ const _MAIN_THEME := preload("res://assets/main_theme.tres")
 
 const _TRANSPARENT_PAGES := [
     PAUSE_PAGE,
-    GAME_OVER_PAGE,
 ]
 
 # Dictionary<PageType, Page>
