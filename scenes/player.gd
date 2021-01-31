@@ -25,6 +25,8 @@ var dash_duration_remaining = 0.0
 var jump_duration_remaining = 0.0
 
 var facing_right = true
+var is_airborne = false
+var is_moving = false
 var was_on_floor = false
 var was_on_wall = false
 
@@ -39,6 +41,18 @@ const IMPACT_DURATION_SEC := 0.25
 onready var particles := PlayerParticles.new()
 
 var _is_ready := false
+
+enum SpriteVariants {
+    IDLE,
+    MOVE,
+    AIR,
+}
+const BLOB_SPRITE_IDLE = preload("res://assets/images/player_idle_blob.png")
+const BLOB_SPRITE_MOVE = preload("res://assets/images/player_move_blob.png")
+const BLOB_SPRITE_AIR = preload("res://assets/images/player_air_blob.png")
+const CORE_SPRITE_IDLE = preload("res://assets/images/player_idle_core.png")
+const CORE_SPRITE_MOVE = preload("res://assets/images/player_move_core.png")
+const CORE_SPRITE_AIR = preload("res://assets/images/player_air_core.png")
 
 func _ready():
     _is_ready = true
@@ -55,6 +69,10 @@ func _physics_process(delta):
         target_horizontal -= HORIZONTAL_VEL
     if Input.is_action_pressed("move_right"):
         target_horizontal += HORIZONTAL_VEL
+    if !Input.is_action_pressed("move_left") and !Input.is_action_pressed("move_right"):
+        is_moving = false
+    else:
+        is_moving = true
     
     if target_horizontal != 0:
         facing_right = target_horizontal > 0
@@ -93,6 +111,8 @@ func _physics_process(delta):
     else:
         velocity.x = lerp(velocity.x, target_horizontal, HORIZONTAL_ACCEL * delta)
     
+    _update_move_sprite()
+
     velocity = move_and_slide(velocity * Constants.TIME_SCALE, Vector2.UP)
     velocity /= Constants.TIME_SCALE
     
@@ -100,11 +120,31 @@ func _physics_process(delta):
     _check_tile()
 
 func _jump():
+    is_airborne = true
     jump_duration_remaining = JUMP_TIME * Constants.TIME_SCALE
     velocity.y = -JUMP_ACCEL
     _emit()
     Sfx.play(Sfx.JUMP)
+    _update_sprite(SpriteVariants.AIR)
     _launch(false)
+
+func _update_move_sprite():
+    if not is_airborne:
+        if not is_moving:
+            _update_sprite(SpriteVariants.IDLE)
+        else:
+            _update_sprite(SpriteVariants.MOVE)
+
+func _update_sprite(variant):
+    if variant == SpriteVariants.IDLE:
+        $Sprite.texture = BLOB_SPRITE_IDLE
+        $core.texture = CORE_SPRITE_IDLE
+    elif variant == SpriteVariants.MOVE:
+        $Sprite.texture = BLOB_SPRITE_MOVE
+        $core.texture = CORE_SPRITE_MOVE
+    elif variant == SpriteVariants.AIR:
+        $Sprite.texture = BLOB_SPRITE_AIR
+        $core.texture = CORE_SPRITE_AIR
 
 func _dash():
     is_dashing = true
@@ -176,7 +216,13 @@ func _launch(is_dash):
             duration_a)
     launch_tween.start()
 
+func _land():
+    is_airborne = false
+    _update_sprite(SpriteVariants.MOVE)
+
 func _impact(is_wall):
+    if not is_wall:
+        _land()
     var scale_multiplier = IMPACT_SCALE_MULTIPLIER
     var displacement = Vector2(0.0, _get_radius() * (scale_multiplier.y - 1.0))
     if is_wall:
@@ -234,6 +280,7 @@ func _update_size():
 
 func _update_sprite_flip():
     $Sprite.flip_h = not facing_right
+    $core.flip_h = not facing_right
 
 func _on_Area2D_body_entered(body):
     if body.is_in_group("bits"):

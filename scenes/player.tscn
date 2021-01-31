@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scenes/player.gd" type="Script" id=1]
 [ext_resource path="res://scenes/player_camera.gd" type="Script" id=2]
-[ext_resource path="res://assets/images/scratch/player.png" type="Texture" id=3]
+[ext_resource path="res://assets/images/player_move_core.png" type="Texture" id=3]
+[ext_resource path="res://assets/images/player_move_blob.png" type="Texture" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 14.1421
@@ -11,7 +12,6 @@ radius = 14.1421
 radius = 14.1421
 
 [node name="player" type="KinematicBody2D"]
-position = Vector2( 0, 1.09022e+06 )
 collision_layer = 0
 script = ExtResource( 1 )
 
@@ -37,6 +37,12 @@ drag_margin_bottom = 0.1
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, -3 )
 scale = Vector2( 0.0848528, 0.0848528 )
+texture = ExtResource( 4 )
+
+[node name="core" type="Sprite" parent="."]
+position = Vector2( 0, -3 )
+scale = Vector2( 0.08, 0.08 )
 texture = ExtResource( 3 )
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
