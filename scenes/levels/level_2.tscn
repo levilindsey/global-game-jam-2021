@@ -10,6 +10,7 @@
 [node name="level_2" type="Node2D"]
 
 [node name="level_logic" parent="." instance=ExtResource( 3 )]
+next_level = ""
 
 [node name="player" parent="level_logic" instance=ExtResource( 1 )]
 position = Vector2( -97.6118, -21.9499 )
@@ -18,6 +19,7 @@ position = Vector2( -97.6118, -21.9499 )
 
 [node name="TileMap" parent="level_logic" instance=ExtResource( 4 )]
 scale = Vector2( 0.15, 0.15 )
+
 tile_data = PoolIntArray( -196608, 5, 0, -65544, 4, 0, -7, 2, 0, -65528, 1, 196608, 131064, 1, 196609, 131065, 1, 196610, 131066, 1, 196610, 131067, 1, 196610, 131068, 1, 196610, 131069, 1, 196610, 131070, 1, 196610, 131071, 1, 196610, 65536, 1, 196610, 65537, 1, 196610, 65538, 1, 196610, 65539, 1, 196610, 65540, 1, 196610, 65541, 1, 196610, 65542, 1, 196610, 65543, 1, 196610, 65544, 1, 196611 )
 
 [node name="Bits" type="Node2D" parent="level_logic"]
