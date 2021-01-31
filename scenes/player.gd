@@ -404,7 +404,7 @@ func _on_Area2D_body_entered(body):
         body.destroy()
     if body.is_in_group("enemies"):
         if body.spiky or size < body.size:
-            Nav.get_level_page().reset()
+            Nav.get_level_page().lose()
         else:
             _grow(body.size)
             particles.play(PlayerParticles.ENEMY_EXPLODE_EFFECT, body)

@@ -4,7 +4,7 @@ export (bool) var start_immediately = true
 onready var fade = $fade
 onready var tween = Tween.new()
 
-const DURATION = 1
+const DURATION = 0.7
 
 signal fade_complete
 
