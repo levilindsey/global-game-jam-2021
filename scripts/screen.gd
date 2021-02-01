@@ -17,10 +17,12 @@ func _ready():
         OS.window_size = size
 
 func _input(event):
+    if event is InputEventKey and event.is_pressed():
+        if event.scancode == KEY_P or event.scancode == KEY_ESCAPE:
+            set_pause(!get_tree().is_paused())
+                
     if OS.is_debug_build():
         if event is InputEventKey and event.is_pressed():
-            if event.scancode == KEY_P:
-                set_pause(!get_tree().is_paused())
             if event.scancode == KEY_F11:
                 OS.window_fullscreen = not OS.window_fullscreen
             if event.scancode == KEY_ESCAPE:

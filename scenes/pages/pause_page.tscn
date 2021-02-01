@@ -30,6 +30,14 @@ margin_top = 50.0
 margin_right = 120.0
 margin_bottom = 90.0
 rect_min_size = Vector2( 120, 40 )
-text = "Reset"
+text = "Reset Level"
+
+[node name="Exit" type="Button" parent="VBoxContainer"]
+margin_top = 100.0
+margin_right = 120.0
+margin_bottom = 140.0
+rect_min_size = Vector2( 120, 40 )
+text = "Quit Game"
 [connection signal="pressed" from="VBoxContainer/Unpause" to="." method="_on_Unpause_pressed"]
 [connection signal="pressed" from="VBoxContainer/Reset" to="." method="_on_Reset_pressed"]
+[connection signal="pressed" from="VBoxContainer/Exit" to="." method="_on_Exit_pressed"]
