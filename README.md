@@ -1,10 +1,20 @@
 # OoboloO
 
-_**[Live demo](https://levilindsey.github.io/global-game-jam-2021/build/global-game-jam-2021.html)**._
+_**[Live demo](https://levilindsey.github.io/global-game-jam-2021/build/global-game-jam-2021.html)**_
 
-![A picture of the OoboloO blob character](assets/images/icons/icon-512.png)
+_[Gameplay trailer](https://www.youtube.com/watch?v=qNUtp4FSwaY&t=2s)_
 
-Theme: Lost and Found
+![The OoboloO title art](assets/images/cover_art.png.png)
+
+We made this game for Global Game Jam 2021. The theme was "lost and found".
+
+Our team of four made all art, sounds, music, and code within 48 hours.
+
+This was made by:
+-   Connie Wan
+-   Daisy Muradyan
+-   Levi Lindsey
+-   Zaven Muradyan
 
 ## Software used
 
