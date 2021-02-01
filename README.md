@@ -4,7 +4,7 @@ _**[Live demo](https://levilindsey.github.io/global-game-jam-2021/build/global-g
 
 _[Gameplay trailer](https://www.youtube.com/watch?v=qNUtp4FSwaY&t=2s)_
 
-![The OoboloO title art](assets/images/cover_art.png.png)
+![The OoboloO title art](assets/images/cover_art.png)
 
 We made this game for Global Game Jam 2021. The theme was "lost and found".
 
